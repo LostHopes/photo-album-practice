@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Photo album | {{ title }}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     {% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
     {% endblock %}
 
     {% block js %}
 
     {% endblock %}
 </head>
+
 <body>
     {% block header %}
+    <header>
+        <div class="menu">
+            <a href="{{ url_for('login_page') }}">Login</a>
+            <a href="{{ url_for('register_page') }}">Register</a>
+        </div>
+    </header>
     {% endblock %}
 
     {% block content %}
@@ -23,6 +34,7 @@
     {% block footer %}
 
     {% endblock %}
-    
+
 </body>
+
 </html>
