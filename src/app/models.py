@@ -24,6 +24,7 @@ class Photo(db.Model):
     users = db.relationship("User", back_populates="photos")
     category = db.relationship("PhotoCategory", back_populates="photo")
 
+
 class PhotoCategory(db.Model):
     __tablename__ = "photo_category"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
