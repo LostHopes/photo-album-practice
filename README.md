@@ -1,3 +1,7 @@
+# Color palette
+
+[Pixelied](https://pixelied.com/colors/palette-visualizer/f72585-b5179e-7209b7-560bad-480ca8-3a0ca3-3f37c9-4361ee-4895ef-4cc9f0)
+
 # Functional requirements
 
 ## Minimum requirements:
@@ -30,3 +34,7 @@ With Docker
 sudo docker built -t yourname .
 sudo docker run yourname
 ```
+
+# References
+
+1. [B2SDK Documentation](https://b2-sdk-python.readthedocs.io)
