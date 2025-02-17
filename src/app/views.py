@@ -1,7 +1,8 @@
-from flask import render_template, redirect, url_for, flash, abort
-from flask_login import login_required, login_remembered, login_user
+from flask import render_template, redirect, url_for, flash, abort, request
+from flask_login import login_required, login_user, logout_user
 from flask_bcrypt import generate_password_hash, check_password_hash
-from app import app
+from b2sdk.v2 import B2Api
+from app import app, b2, db
 from app.forms import RegisterForm, LoginForm, UploadForm
 
 
@@ -11,16 +12,19 @@ def home():
     return render_template("home.html", title=title)
 
 
-@app.get("/photos/")
+@app.route("/photos/")
+@login_required
 def photos():
     title: str = "Photos"
     form = UploadForm()
+
+    bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
 
     return render_template("photos.html", title=title, form=form)
 
 
 @app.post("/photos/")
-def process_upload():
+def upload_photo():
     return redirect(url_for("photos"))
 
 
@@ -29,12 +33,16 @@ def register_page():
     title: str = "Register"
     form = RegisterForm()
 
+    if form.validate_on_submit():
+        return redirect(url_for("register_page"))
+
     return render_template("register.html", title=title, form=form)
 
 
 @app.post("/register/")
 def process_register():
-    return redirect(url_for("register_page"))
+    flash("User successfully registered", "success")
+    return redirect(url_for("login_page"))
 
 
 @app.get("/login/")
@@ -47,4 +55,16 @@ def login_page():
 
 @app.post("/login/")
 def process_login():
+
+    logout_user()
+
+    flash("User successfully logged in")
     return redirect(url_for("photos"))
+
+
+@app.post("/logout/")
+@login_required
+def logout():
+    logout_user()
+    flash("You succesfully logged out", "success")
+    return redirect(url_for("login_page"))
