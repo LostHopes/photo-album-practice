@@ -1,9 +1,11 @@
 from flask import render_template, redirect, url_for, flash, abort, request
 from flask_login import login_required, login_user, logout_user
 from flask_bcrypt import generate_password_hash, check_password_hash
-from b2sdk.v2 import B2Api
+from sqlalchemy.exc import IntegrityError
+from b2sdk.v2 import B2Api, B2Folder
 from app import app, b2, db
 from app.forms import RegisterForm, LoginForm, UploadForm
+from app.models import User, Photo
 
 
 @app.get("/")
@@ -41,8 +43,26 @@ def register_page():
 
 @app.post("/register/")
 def process_register():
-    flash("User successfully registered", "success")
-    return redirect(url_for("login_page"))
+    try:
+        form = RegisterForm(request.form)
+
+        if form.validate():
+            username = form.username.data
+            email = form.email.data
+            password_hash = generate_password_hash(form.password.data)
+            confirm_password = form.confirm_password.data
+
+            user = User(username=username, email=email, password=password_hash)
+            db.session.add(user)
+            db.session.commit()
+
+            flash("User successfully registered", "success")
+            return redirect(url_for("login_page"))
+
+    except IntegrityError:
+        db.session.rollback()
+        flash("User already exist", "error")
+    return redirect(url_for("register_page"))
 
 
 @app.get("/login/")
@@ -55,10 +75,21 @@ def login_page():
 
 @app.post("/login/")
 def process_login():
+    form = LoginForm(request.form)
 
-    logout_user()
+    user = (
+        db.session.query(User)
+        .filter_by(email=form.email.data)
+        .first_or_404(description="User not found")
+    )
 
-    flash("User successfully logged in")
+    if not check_password_hash(user.password, form.password.data):
+        flash("Password is wrong or user doesn't exist", "error")
+        return redirect(url_for("login_page"))
+
+    login_user(user, remember=form.stay_logged_in.data)
+
+    flash("User successfully logged in", "success")
     return redirect(url_for("photos"))
 
 

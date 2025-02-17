@@ -11,6 +11,7 @@
 
 <form class="form" method="post">
     {{ form.csrf_token }}
+    {% include "_flashes.html" %}
     <div>
         {{ form.username.label }}
         {{ form.username(class="text-input") }}
