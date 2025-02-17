@@ -10,8 +10,8 @@
 
 {% block content %}
 
-<form method="post" enctype="multipart/form-data" class="form">
-    <div>
+<form method="post" enctype="multipart/form-data" class="form form-center">
+    <div class="file-upload">
         {{ form.file.label }}
         {{ form.file }}
     </div>
@@ -19,5 +19,12 @@
         {{ form.submit }}
     </div>
 </form>
+
+{% if current_user.is_authenticated %}
+<form class="form" method="post" action="{{ url_for('logout') }}">
+    <input type="submit" value="Logout">
+
+</form>
+{% endif %}
 
 {% endblock %}

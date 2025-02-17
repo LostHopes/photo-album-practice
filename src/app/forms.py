@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed
 from wtforms.fields import (
     BooleanField,
     StringField,
@@ -86,5 +87,14 @@ class LoginForm(FlaskForm):
 
 
 class UploadForm(FlaskForm):
-    file = FileField("Select a photo", validators=[DataRequired()])
+    file = FileField(
+        "Select a photo",
+        validators=[
+            DataRequired(),
+            FileAllowed(
+                ["jpg", "png", "jpeg"],
+                message="File extension isn't in the list: jpg, jpeg, png",
+            ),
+        ],
+    )
     submit = SubmitField("Upload")
