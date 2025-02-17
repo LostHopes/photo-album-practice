@@ -24,14 +24,17 @@
         <div class="menu">
             <a href="{{ url_for('home') }}">Home</a>
             <a href="{{ url_for('photos') }}">Photos</a>
-            <a href="{{ url_for('login_page') }}">Login</a>
-            <a href="{{ url_for('register_page') }}">Register</a>
+            {% if current_user.is_anonymous %}
+                <a href="{{ url_for('login_page') }}">Login</a>
+                <a href="{{ url_for('register_page') }}">Register</a>
+            {% endif %}
         </div>
     </header>
     {% endblock %}
 
 
     {% block content %}
+
 
     {% endblock %}
 
