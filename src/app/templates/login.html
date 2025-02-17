@@ -3,20 +3,23 @@
 {% block css %}
 {{ super() }}
 
-<link rel='stylesheet' type='text/css' href='{{ url_for('static', filename="css/login.css") }}'>
+<link rel='stylesheet' type='text/css' href='{{ url_for('static', filename="css/forms.css") }}'>
 
 {% endblock %}
 
 {% block content %}
+{{ super() }}
 
-<form class="login-form" method="post">
+<form class="form" method="post">
+    {{ form.csrf_token }}
+    {% include "_flashes.html" %}
     <div>
         {{ form.email.label }}
-        {{ form.email }}
+        {{ form.email(class="text-input") }}
     </div>
     <div>
         {{ form.password.label }}
-        {{ form.password }}
+        {{ form.password(class="text-input") }}
     </div>
     <div>
         {{ form.stay_logged_in }}

@@ -3,24 +3,34 @@
 {% block css %}
 {{ super() }}
 
-<link rel='stylesheet' type='text/css' href='{{ url_for('static', filename="css/register.css") }}'>
+<link rel='stylesheet' type='text/css' href='{{ url_for('static', filename="css/forms.css" ) }}'>
 
 {% endblock %}
 
 {% block content %}
 
-<form class="reg-form" method="post">
+<form class="form" method="post">
+    {{ form.csrf_token }}
     <div>
         {{ form.username.label }}
-        {{ form.username }}
+        {{ form.username(class="text-input") }}
+        <!-- {% if form.username.errors %}
+            {% for err in form.username.errors %}
+                <div class="valid-warn">{{ err }}</div>
+            {% endfor %}
+        {% endif %} -->
     </div>
     <div>
         {{ form.email.label }}
-        {{ form.email }}
+        {{ form.email(class="text-input") }}
     </div>
     <div>
         {{ form.password.label }}
-        {{ form.password }}
+        {{ form.password(class="text-input") }}
+    </div>
+    <div>
+        {{ form.confirm_password.label }}
+        {{ form.confirm_password(class="text-input") }}
     </div>
     <div>
         {{ form.accept_rules }}

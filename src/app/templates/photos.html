@@ -4,9 +4,20 @@
 
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/photos.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 
 {% endblock %}
 
 {% block content %}
+
+<form method="post" enctype="multipart/form-data" class="form">
+    <div>
+        {{ form.file.label }}
+        {{ form.file }}
+    </div>
+    <div>
+        {{ form.submit }}
+    </div>
+</form>
 
 {% endblock %}
