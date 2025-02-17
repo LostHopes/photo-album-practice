@@ -1,0 +1,26 @@
+.err-block {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+.err-label{
+  font-size: larger;
+}
+
+.err-btn a{
+  text-decoration: none;
+  text-underline-offset: 8px;
+  color: black;
+}
+
+.err-btn a:hover{
+  text-decoration: underline;
+  color: #4cc9f0;
+}
+
+.err-block > * {
+    margin: 2vh;
+}
