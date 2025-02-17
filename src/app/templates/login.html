@@ -10,7 +10,7 @@
 {% block content %}
 {{ super() }}
 
-<form class="form" method="post">
+<form class="form form-center" method="post">
     {{ form.csrf_token }}
     {% include "_flashes.html" %}
     <div>
