@@ -1,0 +1,30 @@
+name: Photo album CI
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build a photo album project
+        run: |
+          docker built -t photo-album .
+          docker run photo-album
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Test a photo album app
+        run: |
+          source .venv/bin/activate
+          pip install uv
+          uv sync --all-groups
+          pytest
+  
