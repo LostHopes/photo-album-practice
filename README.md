@@ -38,3 +38,4 @@ sudo docker run yourname
 # References
 
 1. [B2SDK Documentation](https://b2-sdk-python.readthedocs.io)
+2. [Writing GitHub Workflows](https://docs.github.com/en/actions/writing-workflows)
