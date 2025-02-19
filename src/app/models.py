@@ -12,25 +12,34 @@ class User(db.Model, UserMixin):
     registered_date = db.Column(
         db.DateTime, default=datetime.now().replace(microsecond=0)
     )
-    photos = db.relationship("Photo", back_populates="users")
+    albums = db.relationship("PhotoAlbum", back_populates="user")
 
     @login_manager.user_loader
     def load_user(user_id):
         return db.session.query(User).filter_by(id=user_id).first()
 
 
+class PhotoAlbum(db.Model):
+    __tablename__ = "photo_album"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user = db.Relationship("User", back_populates="albums")
+    category = db.Relationship("AlbumCategory", back_populates="album")
+    photos = db.Relationship("Photo", back_populates="album")
+
+
 class Photo(db.Model):
     __tablename__ = "photo"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     image = db.Column(db.String)
-    user_id = db.Column(db.ForeignKey("user.id"))
-    users = db.relationship("User", back_populates="photos")
-    category = db.relationship("PhotoCategory", back_populates="photo")
+    album_id = db.Column(db.Integer, db.ForeignKey("photo_album.id"))
+    album = db.Relationship("PhotoAlbum", back_populates="photos")
 
 
-class PhotoCategory(db.Model):
-    __tablename__ = "photo_category"
+class AlbumCategory(db.Model):
+    __tablename__ = "album_category"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
-    photo_id = db.Column(db.Integer, db.ForeignKey("photo.id"))
-    photo = db.relationship("Photo", back_populates="category")
+    album_id = db.Column(db.Integer, db.ForeignKey("photo_album.id"))
+    album = db.Relationship("PhotoAlbum", back_populates="category")
