@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from b2sdk.v2 import B2Api
+import sys
 
 
 app = Flask(__name__)
@@ -28,9 +29,10 @@ def create_app(config_obj=None):
         login_manager.init_app(app)
         bcrypt.init_app(app)
         migrate.init_app(app)
-        b2.authorize_account(
-            "production", app.config["B2_KEY_ID"], app.config["B2_KEY"]
-        )
+        if "pytest" not in sys.modules:
+            b2.authorize_account(
+                "production", app.config["B2_KEY_ID"], app.config["B2_KEY"]
+            )
 
         db.create_all()
 
