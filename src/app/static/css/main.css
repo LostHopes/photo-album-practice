@@ -1,6 +1,6 @@
 :root {
 }
 
-body{
-    height: 90vh;
+html, body{
+    margin: 0;
 }

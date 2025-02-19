@@ -3,15 +3,17 @@
 {% block css %}
 {{ super() }}
 
-<link rel='stylesheet' type='text/css' href='{{ url_for('static', filename="css/home.css") }}'>
+<link rel='stylesheet' type='text/css' href='{{ url_for('static', filename="css/home.css" ) }}'>
 
 {% endblock %}
 
 {% block content %}
 {{ super() }}
 
+<div class="content">
 We are the...
 You can make photo album private or share with the surrounding people.
 We provide...
+</div>
 
 {% endblock %}
