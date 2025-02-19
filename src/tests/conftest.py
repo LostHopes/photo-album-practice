@@ -6,7 +6,6 @@ from app import create_app, config, db
 def app():
     """Create app for testing"""
     app = create_app(config.DevConfig)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
     yield app
     with app.app_context():
         db.session.remove()
