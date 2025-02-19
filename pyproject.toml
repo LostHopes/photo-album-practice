@@ -26,4 +26,4 @@ lint = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "-v --cov-fail-under=50 --cov=app src/tests/"
+addopts = "-v --cov-fail-under=50 --cov=app"
