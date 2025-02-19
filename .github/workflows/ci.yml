@@ -46,11 +46,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
+      - name: Set up Python for testing
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
       - name: Test a photo album app
         run: |
           python -m venv .venv
           source .venv/bin/activate
           pip install uv
           uv sync --all-groups
-          pytest
+
+      - name: Run tests
+        run: pytest
   
