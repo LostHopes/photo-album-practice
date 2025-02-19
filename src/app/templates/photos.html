@@ -10,21 +10,25 @@
 
 {% block content %}
 
-<form method="post" enctype="multipart/form-data" class="form form-center">
-    <div class="file-upload">
-        {{ form.file.label }}
-        {{ form.file }}
-    </div>
-    <div>
-        {{ form.submit }}
-    </div>
-</form>
+<div class="create-album">
+    <a href="{{ url_for('create_album') }}">Create album</a>
+</div>
 
-{% if current_user.is_authenticated %}
+<div class="album-container">
+    {% include "_flashes.html" %}
+    {% for album in albums %}
+    <a href="{{ url_for('album_page', album_id=album.id) }}">
+        <div class="album">
+            <label>{{ album.name }}</label>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+<!-- {% if current_user.is_authenticated %}
 <form class="form" method="post" action="{{ url_for('logout') }}">
     <input type="submit" value="Logout">
-
 </form>
 {% endif %}
 
-{% endblock %}
+{% endblock %} -->

@@ -63,6 +63,19 @@ input[type="submit"]:hover{
     flex-direction: column;
 }
 
+.form-upload{
+    display: flex;
+    flex-flow: column wrap;
+    border: 3px solid black;
+    border-radius: 8px;
+    background-color: #3a0ca3;
+    color: white;
+}
+
+.form-upload label{
+    padding: 0.5em;
+}
+
 .valid-warn{
     color: red;
 }
