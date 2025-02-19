@@ -41,13 +41,14 @@ jobs:
           push: true
           tags: ghcr.io/${{ steps.lowercase_owner.outputs.lowercase }}/${{ steps.lowercase_name.outputs.lowercase }}:${{ github.sha }}
 
-          
+
   test:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
       - name: Test a photo album app
         run: |
+          python -m venv .venv
           source .venv/bin/activate
           pip install uv
           uv sync --all-groups
