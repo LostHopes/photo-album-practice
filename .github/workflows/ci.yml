@@ -48,7 +48,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
+
       - name: Set up Python for testing
         uses: actions/setup-python@v5
         with:
@@ -60,7 +60,5 @@ jobs:
           source .venv/bin/activate
           pip install uv
           uv sync --all-groups
-
-      - name: Run tests
-        run: pytest
+          pytest
   
