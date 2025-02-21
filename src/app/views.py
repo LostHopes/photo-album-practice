@@ -75,7 +75,7 @@ def process_upload(album_id: int):
     for f in files:
         print(f.filename)
 
-    bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+        photo = Photo(image=f.filename, album_id=album_id)
 
     return redirect(url_for("photos"))
 
