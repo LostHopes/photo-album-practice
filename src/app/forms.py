@@ -96,7 +96,7 @@ class UploadForm(FlaskForm):
                 message="File extension isn't in the list: jpg, jpeg, png",
             ),
         ],
-        render_kw={"multiple": True}
+        render_kw={"multiple": True},
     )
     submit = SubmitField("Upload")
 

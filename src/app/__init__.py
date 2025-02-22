@@ -29,6 +29,7 @@ def create_app(config_obj=None):
         login_manager.init_app(app)
         bcrypt.init_app(app)
         migrate.init_app(app)
+
         if "pytest" not in sys.modules:
             b2.authorize_account(
                 "production", app.config["B2_KEY_ID"], app.config["B2_KEY"]

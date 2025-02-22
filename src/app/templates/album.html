@@ -4,12 +4,13 @@
 
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/album.css') }}">
 
 {% endblock %}
 
 {% block content %}
 
-<form method="post" enctype="multipart/form-data" class="form form-center">
+<form method="post" enctype="multipart/form-data" class="form form-up">
     <div class="form-upload">
         {{ form.file.label }}
         {{ form.file }}
@@ -18,5 +19,11 @@
         {{ form.submit }}
     </div>
 </form>
+
+<div class="img-container">
+    {% for url in urls %}
+        <img src="{{ url }}" alt="Image" width="300" height="300">
+    {% endfor %}
+</div>
 
 {% endblock %}

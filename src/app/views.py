@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, abort, request
+from flask import render_template, redirect, url_for, flash, abort, request, Response
 from flask_login import login_required, login_user, logout_user, current_user
 from flask_bcrypt import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
@@ -26,13 +26,39 @@ def photos():
     return render_template("photos.html", title=title, form=form, albums=albums)
 
 
-@app.get("/photos/<album_id>/")
+@app.get("/photos/<int:album_id>/")
 @login_required
-def album_page(album_id):
+def album_page(album_id: int):
     title: str = "Upload photo"
     form = UploadForm()
+    bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+    names = db.session.query(Photo).filter_by(album_id=album_id).all()
 
-    return render_template("album.html", title=title, form=form)
+    urls: list[str] = []
+    token = b2.account_info.get_account_auth_token()
+    for name in names:
+        urls.append(f"{bucket.get_download_url(name.image)}?Authorization={token}")
+
+    if form.validate_on_submit():
+        return redirect("process_upload", album_id=album_id)
+
+    return render_template("album.html", title=title, form=form, urls=urls)
+
+
+@app.post("/photos/<int:album_id>/")
+@login_required
+def process_upload(album_id: int):
+    files = request.files.getlist("file")
+
+    bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+
+    for f in files:
+        photo = Photo(image=f.filename, album_id=album_id)
+        db.session.add(photo)
+        db.session.commit()
+        bucket.upload_bytes(f.read(), f.filename)
+
+    return redirect(url_for("photos"))
 
 
 @app.get("/photos/create")
@@ -54,7 +80,7 @@ def process_album():
         form = AlbumForm(request.form)
         name = form.name.data
         category = form.category.data
-        
+
         album = PhotoAlbum(name=name, user_id=current_user.get_id())
         db.session.add(album)
         db.session.commit()
@@ -64,19 +90,6 @@ def process_album():
         return redirect(url_for("photos"))
 
     flash("Album was created successfully", "success")
-    return redirect(url_for("photos"))
-
-
-@app.post("/photos/<int:album_id>/")
-@login_required
-def process_upload(album_id: int):
-    files = request.files.getlist("file")
-
-    for f in files:
-        print(f.filename)
-
-        photo = Photo(image=f.filename, album_id=album_id)
-
     return redirect(url_for("photos"))
 
 
