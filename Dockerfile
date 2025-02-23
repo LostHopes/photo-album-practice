@@ -15,7 +15,7 @@ RUN python -m venv $VIRTUAL_ENV\
     
 COPY . /app/
 EXPOSE 5000
-CMD [ "python", "src/run.py" ]
+CMD [ "python", "src/wsgi.py" ]
 
 
 
