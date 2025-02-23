@@ -6,10 +6,14 @@ license = "MIT"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "b2sdk>=2.8.0",
     "flask>=3.1.0",
     "flask-bcrypt>=1.0.1",
     "flask-login>=0.6.3",
+    "flask-migrate>=4.1.0",
     "flask-sqlalchemy>=3.1.1",
+    "flask-wtf>=1.2.2",
+    "python-dotenv>=1.0.1",
 ]
 
 [dependency-groups]
@@ -20,3 +24,6 @@ test = [
 lint = [
     "ruff>=0.9.5",
 ]
+
+[tool.pytest.ini_options]
+addopts = "-v --cov-fail-under=50 --cov=app"

@@ -1,0 +1,9 @@
+.content{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: first baseline;
+    height: 90vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}

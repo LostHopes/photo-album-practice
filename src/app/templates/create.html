@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+
+{% block css %}
+
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/photos.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+
+{% endblock %}
+
+{% block content %}
+
+<form class="form form-center" method="post">
+    <div>
+        {{ form.name.label }}
+        {{ form.name(class="text-input") }}
+        {% if form.name.errors %}
+            {% for err in form.name.errors %}
+                <div class="valid-warn">{{ err }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div>
+        {{ form.category.label }}
+        {{ form.category(class="text-input") }}
+    </div>
+    <div>
+        {{ form.submit }}
+    </div>
+</form>
+
+{% endblock %}

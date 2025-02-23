@@ -1,0 +1,64 @@
+name: Photo album CI
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Convert repository owner to lowercase
+        id: lowercase_owner
+        uses: vishalmamidi/lowercase-action@v1
+        with:
+          string: ${{ github.repository_owner }}
+
+      - name: Convert repository and owner name to lowercase
+        id: lowercase_name
+        uses: vishalmamidi/lowercase-action@v1
+        with:
+          string: ${{ github.event.repository.name }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ steps.lowercase_owner.outputs.lowercase }}/${{ steps.lowercase_name.outputs.lowercase }}:${{ github.sha }}
+
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python for testing
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Test a photo album app
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install uv
+          uv sync --all-groups
+          pytest
+  

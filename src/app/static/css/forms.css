@@ -1,0 +1,90 @@
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  font-size: large;
+}
+
+.form-center {
+  height: 90vh;
+}
+
+.form-up {
+  height: 50vh;
+}
+
+.form > * {
+  padding: 1.5vh;
+}
+
+input {
+  font-size: medium;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  height: 3em;
+  width: 20em;
+  border-style: double;
+  border-color: #4cc9f0;
+  border-width: 3px;
+  border-radius: 6px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  border-color: #f72585;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder,
+input[type="email"]::placeholder {
+  color: black;
+}
+
+input[type="submit"] {
+  height: 3em;
+  width: 8em;
+  border-radius: 5px;
+  border-width: 1px;
+  background-color: #3f37c9;
+  color: white;
+  transition: ease-in-out 0.5s;
+}
+
+input[type="submit"]:hover {
+  cursor: pointer;
+  background-color: #f72585;
+}
+
+input[type="checkbox"] {
+    position: relative;
+    width: 1em;
+    height: 1em;
+    vertical-align: -2px;
+  }
+
+.form .text-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-upload {
+  display: flex;
+  flex-flow: column wrap;
+  border: 3px solid black;
+  border-radius: 8px;
+  background-color: #3a0ca3;
+  color: white;
+}
+
+.form-upload label {
+  padding: 0.5em;
+}
+
+.valid-warn {
+  color: red;
+}

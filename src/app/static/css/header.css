@@ -1,0 +1,29 @@
+header{
+  position: fixed;
+  background-color: #7209b7;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 1em;
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+  gap: 20px;
+  font-size: larger;
+}
+
+.menu a {
+  text-decoration: none;
+  text-underline-offset: 8px;
+  color: white;
+  transition: ease-in-out 0.5s;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+  color:#4cc9f0;
+}

@@ -1,0 +1,28 @@
+{% extends "_base.html" %}
+
+{% block css %}
+
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/photos.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="create-album">
+    <a href="{{ url_for('create_album') }}">Create album</a>
+</div>
+
+<div class="album-container">
+    {% include "_flashes.html" %}
+    {% for album in albums %}
+    <a href="{{ url_for('album_page', album_id=album.id) }}">
+        <div class="album">
+            <label>{{ album.name }}</label>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock %}
