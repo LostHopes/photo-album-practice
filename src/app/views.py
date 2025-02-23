@@ -28,7 +28,7 @@ def photos():
 
     form = AlbumForm()
 
-    albums = db.session.query(PhotoAlbum).all()
+    albums = db.session.query(PhotoAlbum).filter_by(user_id=current_user.get_id()).all()
 
     return render_template("photos.html", title=title, form=form, albums=albums)
 
