@@ -12,7 +12,7 @@ class User(db.Model, UserMixin):
     registered_date = db.Column(
         db.DateTime, default=datetime.now().replace(microsecond=0)
     )
-    albums = db.relationship("PhotoAlbum", back_populates="user")
+    albums = db.relationship("PhotoAlbum", back_populates="user", cascade="all,delete")
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -26,7 +26,7 @@ class PhotoAlbum(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     user = db.Relationship("User", back_populates="albums")
     category = db.Relationship("AlbumCategory", back_populates="album")
-    photos = db.Relationship("Photo", back_populates="album")
+    photos = db.Relationship("Photo", back_populates="album", cascade="all,delete")
 
 
 class Photo(db.Model):
