@@ -14,6 +14,7 @@
     {% endblock %}
 
     {% block js %}
+    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
 
     {% endblock %}
 </head>
@@ -30,6 +31,7 @@
             {% elif current_user.is_authenticated %}
 
             <a href="{{ url_for('photos') }}">Albums</a>
+            <a href="{{ url_for('account') }}">Account</a>
 
             {% else %}
 

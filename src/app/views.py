@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, abort, request, Response
+from flask import render_template, redirect, url_for, flash, abort, request
 from flask_login import login_required, login_user, logout_user, current_user
 from flask_bcrypt import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
@@ -12,6 +12,13 @@ from app.models import User, Photo, PhotoAlbum
 def home():
     title: str = "Home"
     return render_template("home.html", title=title)
+
+
+@app.get("/account/")
+@login_required
+def account():
+    title: str = "Account"
+    return render_template("account.html", title=title)
 
 
 @app.get("/albums/")
