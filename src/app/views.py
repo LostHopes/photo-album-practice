@@ -14,10 +14,10 @@ def home():
     return render_template("home.html", title=title)
 
 
-@app.get("/photos/")
+@app.get("/albums/")
 @login_required
 def photos():
-    title: str = "Photos"
+    title: str = "Albums"
 
     form = AlbumForm()
 
@@ -26,10 +26,10 @@ def photos():
     return render_template("photos.html", title=title, form=form, albums=albums)
 
 
-@app.get("/photos/<int:album_id>/")
+@app.get("/albums/<int:album_id>/")
 @login_required
 def album_page(album_id: int):
-    title: str = "Upload photo"
+    title: str = "Album"
     form = UploadForm()
     bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
     names = db.session.query(Photo).filter_by(album_id=album_id).all()
@@ -45,7 +45,7 @@ def album_page(album_id: int):
     return render_template("album.html", title=title, form=form, urls=urls)
 
 
-@app.post("/photos/<int:album_id>/")
+@app.post("/albums/<int:album_id>/")
 @login_required
 def process_upload(album_id: int):
     files = request.files.getlist("file")
@@ -61,7 +61,7 @@ def process_upload(album_id: int):
     return redirect(url_for("photos"))
 
 
-@app.get("/photos/create")
+@app.get("/albums/create")
 @login_required
 def create_album():
     title: str = "Create album"
@@ -73,7 +73,7 @@ def create_album():
     return render_template("create.html", title=title, form=form)
 
 
-@app.post("/photos/create")
+@app.post("/albums/create")
 @login_required
 def process_album():
     try:
