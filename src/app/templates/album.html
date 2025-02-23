@@ -20,10 +20,12 @@
     </div>
 </form>
 
+{% if urls %}
 <div class="img-container">
     {% for url in urls %}
         <img src="{{ url }}" alt="Image">
     {% endfor %}
 </div>
+{% endif %}
 
 {% endblock %}
