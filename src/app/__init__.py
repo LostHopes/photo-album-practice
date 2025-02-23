@@ -28,7 +28,7 @@ def create_app(config_obj=None):
         db.init_app(app)
         login_manager.init_app(app)
         bcrypt.init_app(app)
-        migrate.init_app(app)
+        migrate.init_app(app, db)
 
         if "pytest" not in sys.modules:
             b2.authorize_account(
