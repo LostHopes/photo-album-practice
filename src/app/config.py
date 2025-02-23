@@ -21,3 +21,7 @@ class ProdConfig(BaseConfig):
 
 class DevConfig(BaseConfig):
     pass
+
+
+class TestConfig(BaseConfig):
+    WTF_CSRF_ENABLED = False

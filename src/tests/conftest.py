@@ -5,7 +5,7 @@ from app import create_app, config, db
 @pytest.fixture(scope="session", autouse=True)
 def app():
     """Create app for testing"""
-    app = create_app(config.DevConfig)
+    app = create_app(config.TestConfig)
     yield app
     with app.app_context():
         db.session.remove()
