@@ -84,7 +84,3 @@ input[type="checkbox"] {
 .form-upload label {
   padding: 0.5em;
 }
-
-.valid-warn {
-  color: red;
-}
