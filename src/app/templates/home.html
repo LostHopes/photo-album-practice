@@ -11,9 +11,25 @@
 {{ super() }}
 
 <div class="content">
-We are the...
-You can make photo album private or share with the surrounding people.
-We provide...
+    <div class="item">
+        <p>
+            Our aims to provide users with simple solution to store their photos.
+        You can make a private or public album and share it with the surroundings.
+        </p>
+        <p>
+            We provide:
+            <ul>
+                <li>Save access to files stored on the cloud</li>
+                <li>Create an album</li>
+                <li>Upload a photos</li>
+                <li>Remove the album</li>
+            </ul>
+        </p>
+        <a href="{{ url_for('register_page') }}">Join now</a>
+    </div>
+    <div class="item">
+        <img src="{{ url_for('static', filename='img/team.jpg') }}" alt="Team">
+    </div>
 </div>
 
 {% endblock %}
