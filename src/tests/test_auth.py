@@ -12,6 +12,7 @@ def test_register(client):
     )
 
     assert response.status_code == 200
+    assert response.request.path == "/login/"
 
 
 def test_login(client):
@@ -22,3 +23,4 @@ def test_login(client):
     )
 
     assert response.status_code == 200
+    assert response.request.path == "/albums/"
