@@ -31,7 +31,27 @@ B2_KEY="" # API key
 BUCKET_ID="" # id of a bucket
 ```
 
-With Docker
+1. Create and activate virtual environment
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+2. Install uv and update python package manager
+
+```bash
+pip install --upgrade pip uv
+```
+
+3. Install dependencies and run the project
+
+```bash
+uv sync --all-groups
+uv run python src/wsgi.py
+```
+
+## With Docker
 
 ```bash
 sudo docker built -t yourname .
@@ -42,3 +62,4 @@ sudo docker run yourname
 
 1. [B2SDK Documentation](https://b2-sdk-python.readthedocs.io)
 2. [Writing GitHub Workflows](https://docs.github.com/en/actions/writing-workflows)
+3. [Pytest Documentation](https://docs.pytest.org)
