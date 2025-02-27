@@ -24,7 +24,7 @@
 You need .env file in **app** folder in order to run the application.
 
 ```.env
-SECRET_KEY="yoursecret" secret for wtforms
+SECRET_KEY="yoursecret" # secret for wtforms
 SQLALCHEMY_DATABASE_URI="" # your database provider
 B2_KEY_ID="" # API key id of a bucket
 B2_KEY="" # API key
