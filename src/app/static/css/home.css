@@ -39,22 +39,23 @@ ul li::before {
     background-color: #7209b7;
     border-width: 6px;
     border-style: solid;
-    border-radius: 8px;
+    border-radius: 10px;
     width: fit-content;
     color: white;
     padding: 10px;
     margin-top: 20px;
     transition: all 0.5s ease-in-out;
-    animation: button-glow 3s infinite;
+    animation: button-glow 2.5s infinite;
 }
 
 .item a:hover{
     background-color: #f72585;
+    animation: none;
 }
 
 @keyframes button-glow{
     0% {
-        border-right-color: #f72585;
+        border-right-color: #4895ef;
         border-bottom-color: #b5179e;
         border-left-color: #4361ee;
         border-top-color: #4895ef;
