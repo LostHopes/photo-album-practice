@@ -1,6 +1,24 @@
 def test_register(client):
-    pass
+    response = client.post(
+        "/register/",
+        data={
+            "username": "TestUser123",
+            "email": "test@gmail.com",
+            "password": "password",
+            "confirm_password": "password",
+            "accept_rules": True,
+        },
+        follow_redirects=True,
+    )
+
+    assert response.status_code == 200
 
 
 def test_login(client):
-    pass
+    response = client.post(
+        "/login/",
+        data={"email": "test@gmail.com", "password": "password"},
+        follow_redirects=True,
+    )
+
+    assert response.status_code == 200

@@ -20,7 +20,7 @@ def test_create_user(client):
 def test_get_user(client):
     with client.application.app_context():
         user = db.session.query(User).first()
-    
+
     assert user.id == 1
     assert user.username == "TestUser123"
 

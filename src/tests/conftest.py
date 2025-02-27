@@ -11,8 +11,13 @@ def app():
         db.session.remove()
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def client(app):
     """Create test client to pass as an argument to other tests"""
+
     with app.test_client() as test_client:
         yield test_client
+
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
