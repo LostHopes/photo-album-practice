@@ -100,19 +100,18 @@ def process_album():
     return redirect(url_for("photos"))
 
 
-@app.post("/albums/remove/")
+@app.post("/albums/remove/<int:album_id>/")
 @login_required
-def remove_album():
+def remove_album(album_id: int):
     try:
-        album = db.session.query(PhotoAlbum)
+        album = db.session.query(PhotoAlbum).filter_by(id=album_id).first()
         db.session.delete(album)
         db.session.commit()
-
         flash("The album was successfully deleted", "success")
 
-    except:
+    except Exception as e:
         flash("Failed to remove the album", "error")
-    return redirect(url_for("album_page"))
+    return redirect(url_for("photos"))
 
 
 

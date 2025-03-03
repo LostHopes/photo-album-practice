@@ -27,7 +27,7 @@
         <div class="album">
             <label>
                 {{ album.name }}
-                <form action="#">
+                <form action="{{ url_for('remove_album', album_id=album.id) }}" method="post">
                     <input type="submit" value="X" id="remove-album">
                 </form>
             </label>
