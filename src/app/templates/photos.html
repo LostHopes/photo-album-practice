@@ -25,7 +25,12 @@
     {% for album in albums %}
     <a href="{{ url_for('album_page', album_id=album.id) }}">
         <div class="album">
-            <label>{{ album.name }}</label>
+            <label>
+                {{ album.name }}
+                <form action="#">
+                    <input type="submit" value="X" id="remove-album">
+                </form>
+            </label>
         </div>
     </a>
     {% endfor %}
