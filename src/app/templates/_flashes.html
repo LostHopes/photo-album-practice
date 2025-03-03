@@ -3,7 +3,7 @@
 {% for category, message in messages %}
 <div class="alert-{{ category }}" role="alert" id="alert">
     {{ message }}
-    <input type="button" class="alert-close" value="X" onclick="removeElement()">
+    <input type="button" class="alert-close" value="X" onclick="removeElement(this)">
     {% endfor %}
 </div>
 {% endif %}
