@@ -39,7 +39,7 @@ def test_update_user(client):
 def test_delete_user(client):
     with client.application.app_context():
         username = "TestUser123"
-        user = db.session.query(User).first()
+        user = db.session.query(User).filter_by(username=username).first()
         db.session.delete(user)
         db.session.commit()
 
