@@ -43,8 +43,8 @@ def album_page(album_id: int):
 
     urls: list[str] = []
     token = b2.account_info.get_account_auth_token()
-    for name in names:
-        urls.append(f"{bucket.get_download_url(name.image)}?Authorization={token}")
+    for image in names:
+        urls.append(f"{bucket.get_download_url(image.name)}?Authorization={token}")
 
     if form.validate_on_submit():
         return redirect("process_upload", album_id=album_id)
@@ -60,10 +60,10 @@ def process_upload(album_id: int):
     bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
 
     for f in files:
-        photo = Photo(image=f.filename, album_id=album_id)
+        photo = Photo(name=f.filename, album_id=album_id)
         db.session.add(photo)
         db.session.commit()
-        bucket.upload_bytes(f.read(), f.filename)
+        bucket.upload_bytes(data_bytes=f.read(), file_name=f.filename)
 
     return redirect(url_for("photos"))
 
@@ -131,7 +131,7 @@ def process_register():
 
     except IntegrityError:
         db.session.rollback()
-        flash("User already exist", "error")
+        flash("User with this username or email already exist", "error")
     return redirect(url_for("register_page"))
 
 

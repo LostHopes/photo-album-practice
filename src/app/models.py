@@ -32,7 +32,7 @@ class PhotoAlbum(db.Model):
 class Photo(db.Model):
     __tablename__ = "photo"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    image = db.Column(db.String)
+    name = db.Column(db.String)
     album_id = db.Column(db.Integer, db.ForeignKey("photo_album.id"))
     album = db.Relationship("PhotoAlbum", back_populates="photos")
 
