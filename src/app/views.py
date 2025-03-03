@@ -100,6 +100,32 @@ def process_album():
     return redirect(url_for("photos"))
 
 
+@app.post("/albums/remove/")
+@login_required
+def remove_album():
+    try:
+        album = db.session.query(PhotoAlbum)
+        db.session.delete(album)
+        db.session.commit()
+
+        flash("The album was successfully deleted", "success")
+
+    except:
+        flash("Failed to remove the album", "error")
+    return redirect(url_for("album_page"))
+
+
+
+@app.post("/albums/<int:album_id>/remove")
+def remove_photo(album_id: int):
+
+    bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+    photo = db.session.query(Photo).filter_by(album_id=album_id).first()
+    filename = bucket.get_file_info_by_name(photo.name)
+
+    return redirect(url_for("album_page"))
+
+
 @app.get("/register/")
 def register_page():
     title: str = "Register"
