@@ -17,3 +17,9 @@ img{
 img:hover{
     transform: scale(1.1) translate(-0.5vw);
 }
+
+.remove-photo input{
+    background-color: red;
+    color: white;
+    border-radius: 4px;
+}

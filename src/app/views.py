@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from b2sdk.v2 import B2Api, B2Folder
 from app import app, b2, db
 from app.forms import RegisterForm, LoginForm, UploadForm, AlbumForm
-from app.models import User, Photo, PhotoAlbum
+from app.models import User, Photo, PhotoAlbum, AlbumCategory
 
 
 @app.get("/")
@@ -49,7 +49,7 @@ def album_page(album_id: int):
     if form.validate_on_submit():
         return redirect("process_upload", album_id=album_id)
 
-    return render_template("album.html", title=title, form=form, urls=urls)
+    return render_template("album.html", title=title, form=form, urls=urls, album_id=album_id)
 
 
 @app.post("/albums/<int:album_id>/")
@@ -63,7 +63,8 @@ def process_upload(album_id: int):
         photo = Photo(name=f.filename, album_id=album_id)
         db.session.add(photo)
         db.session.commit()
-        bucket.upload_bytes(data_bytes=f.read(), file_name=f.filename)
+        # bucket.upload_bytes(data_bytes=f.read(), file_name=f"{album.category}/{f.filename}")
+        bucket.upload_bytes(data_bytes=f.read(), file_name=f"{f.filename}")
 
     return redirect(url_for("photos"))
 
@@ -114,15 +115,20 @@ def remove_album(album_id: int):
     return redirect(url_for("photos"))
 
 
-
 @app.post("/albums/<int:album_id>/remove")
 def remove_photo(album_id: int):
-
     bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
-    photo = db.session.query(Photo).filter_by(album_id=album_id).first()
-    filename = bucket.get_file_info_by_name(photo.name)
 
-    return redirect(url_for("album_page"))
+    photo = db.session.query(Photo).filter_by(album_id=album_id).first()
+    db.session.delete(photo)
+    db.session.commit()
+
+    # FIXME: remove file by it's name
+
+    file = bucket.get_file_info_by_name(photo.name)
+    file.delete()
+
+    return redirect(url_for("album_page", album_id=album_id))
 
 
 @app.get("/register/")

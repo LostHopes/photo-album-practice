@@ -17,6 +17,7 @@
   background-color: #7209b7;
   color: white;
   transition: all 0.5s;
+  box-shadow: 1px 1px 3px 1px black;
 }
 
 .create-album a:hover {
@@ -65,6 +66,9 @@
   transition: 0.3s all;
   cursor: pointer;
   margin-top: 10px;
+}
+
+#remove-album:hover {
 }
 
 .album:hover #remove-album {

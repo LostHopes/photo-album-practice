@@ -47,7 +47,9 @@ input[type="email"]::placeholder {
 
 .create-album-submit,
 .logout,
-.upload {
+.upload,
+.login,
+.register {
   height: 3em;
   width: 8em;
   border-radius: 5px;
@@ -55,11 +57,14 @@ input[type="email"]::placeholder {
   background-color: #3f37c9;
   color: white;
   transition: ease-in-out 0.5s;
+  box-shadow: 2px 2px 4px 2px black;
 }
 
 .create-album-submit:hover,
 .logout:hover,
-.upload:hover {
+.upload:hover,
+.login:hover,
+.register:hover {
   cursor: pointer;
   background-color: #f72585;
 }
