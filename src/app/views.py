@@ -129,9 +129,8 @@ def remove_photo(album_id: int):
     db.session.delete(photo)
     db.session.commit()
 
-    # FIXME: remove file by it's name
-
-    file = bucket.get_file_info_by_name(photo.name)
+    category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
+    file = bucket.get_file_info_by_name(f"{category.name}/{photo.name}")
     file.delete()
 
     return redirect(url_for("album_page", album_id=album_id))
