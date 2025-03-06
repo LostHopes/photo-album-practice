@@ -39,32 +39,34 @@ def album_page(album_id: int):
     title: str = "Album"
     form = UploadForm()
     bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+    folder = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
     names = db.session.query(Photo).filter_by(album_id=album_id).all()
 
     urls: list[str] = []
     token = b2.account_info.get_account_auth_token()
     for image in names:
-        urls.append(f"{bucket.get_download_url(image.name)}?Authorization={token}")
+        urls.append(f"{bucket.get_download_url(f"{folder.name}/{image.name}")}?Authorization={token}")
 
     if form.validate_on_submit():
         return redirect("process_upload", album_id=album_id)
 
-    return render_template("album.html", title=title, form=form, urls=urls, album_id=album_id)
+    return render_template(
+        "album.html", title=title, form=form, urls=urls, album_id=album_id
+    )
 
 
 @app.post("/albums/<int:album_id>/")
 @login_required
 def process_upload(album_id: int):
     files = request.files.getlist("file")
-
     bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+    category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
 
     for f in files:
         photo = Photo(name=f.filename, album_id=album_id)
         db.session.add(photo)
         db.session.commit()
-        # bucket.upload_bytes(data_bytes=f.read(), file_name=f"{album.category}/{f.filename}")
-        bucket.upload_bytes(data_bytes=f.read(), file_name=f"{f.filename}")
+        bucket.upload_bytes(data_bytes=f.read(), file_name=f"{category.name}/{f.filename}")
 
     return redirect(url_for("photos"))
 
@@ -91,6 +93,10 @@ def process_album():
 
         album = PhotoAlbum(name=name, user_id=current_user.get_id())
         db.session.add(album)
+        db.session.commit()
+
+        album_category = AlbumCategory(name=category, album_id=album.id)
+        db.session.add(album_category)
         db.session.commit()
 
     except IntegrityError:

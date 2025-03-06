@@ -25,7 +25,7 @@ class PhotoAlbum(db.Model):
     name = db.Column(db.String, unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     user = db.Relationship("User", back_populates="albums")
-    category = db.Relationship("AlbumCategory", back_populates="album")
+    category = db.Relationship("AlbumCategory", back_populates="album", cascade="all,delete")
     photos = db.Relationship("Photo", back_populates="album", cascade="all,delete")
 
 
