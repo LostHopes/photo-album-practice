@@ -18,8 +18,17 @@ img:hover{
     transform: scale(1.1) translate(-0.5vw);
 }
 
+.remove-photo{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 .remove-photo input{
     background-color: red;
     color: white;
     border-radius: 4px;
+    cursor: pointer;
 }
