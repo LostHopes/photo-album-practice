@@ -44,14 +44,19 @@
     </header>
     {% endblock %}
 
+    <main>
+        {% block content %}
 
-    {% block content %}
-
-
-    {% endblock %}
-
+        {% endblock %}
+    </main>
 
     {% block footer %}
+
+    <footer>
+        <div class="copyright">
+            &copy Photo albums
+        </div>
+    </footer>
 
     {% endblock %}
 
