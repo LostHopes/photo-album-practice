@@ -45,7 +45,9 @@ def album_page(album_id: int):
     urls: list[str] = []
     token = b2.account_info.get_account_auth_token()
     for image in names:
-        urls.append(f"{bucket.get_download_url(f"{folder.name}/{image.name}")}?Authorization={token}")
+        urls.append(
+            f"{bucket.get_download_url(f'{folder.name}/{image.name}')}?Authorization={token}"
+        )
 
     if form.validate_on_submit():
         return redirect("process_upload", album_id=album_id)
@@ -66,7 +68,9 @@ def process_upload(album_id: int):
         photo = Photo(name=f.filename, album_id=album_id)
         db.session.add(photo)
         db.session.commit()
-        bucket.upload_bytes(data_bytes=f.read(), file_name=f"{category.name}/{f.filename}")
+        bucket.upload_bytes(
+            data_bytes=f.read(), file_name=f"{category.name}/{f.filename}"
+        )
 
     return redirect(url_for("photos"))
 
