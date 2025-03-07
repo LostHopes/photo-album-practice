@@ -12,7 +12,7 @@ header{
   display: flex;
   justify-content: center;
   flex-flow: row wrap;
-  gap: 20px;
+  gap: 70px;
   font-size: larger;
 }
 

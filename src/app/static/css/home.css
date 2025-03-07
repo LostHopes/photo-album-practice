@@ -12,6 +12,10 @@
     font-size: 30px;
 }
 
+main{
+    padding-bottom: 0px !important;
+}
+
 .item img{
     max-height: 70vh;
     width: 45vw;
@@ -43,9 +47,9 @@ ul li::before {
     width: fit-content;
     color: white;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 50px;
     transition: all 0.5s ease-in-out;
-    animation: button-glow 2.5s infinite;
+    animation: button-glow 4s infinite;
 }
 
 .item a:hover{

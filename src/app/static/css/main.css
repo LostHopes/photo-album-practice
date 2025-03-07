@@ -7,6 +7,10 @@ body {
   padding: 0;
 }
 
+main{
+  padding-bottom: 50px;
+}
+
 div[class^="alert-"] {
   display: flex;
   justify-content: center;
