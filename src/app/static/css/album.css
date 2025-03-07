@@ -9,13 +9,8 @@
 img{
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
     width: 300px;
     height: 300px;
-}
-
-img:hover{
-    transform: scale(1.1) translate(-0.5vw);
 }
 
 .remove-photo{

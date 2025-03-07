@@ -8,6 +8,10 @@
 
 {% endblock %}
 
+{% block js %}
+<script src="{{ url_for('static', filename='js/photos.js') }}"></script>
+{% endblock %}
+
 {% block content %}
 
 <form method="post" enctype="multipart/form-data" class="form form-up">
@@ -24,7 +28,7 @@
 <div class="img-container">
     {% for url in urls %}
     <form action="{{ url_for('remove_photo', album_id=album_id) }}" method="post" class="remove-photo">
-        <img src="{{ url }}" alt="Image">
+        <img src="{{ url }}" alt="Image" class="photo">
         <input type="submit" value="X">
     </form>
     {% endfor %}
