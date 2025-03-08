@@ -60,17 +60,21 @@ def album_page(album_id: int):
 @app.post("/albums/<int:album_id>/")
 @login_required
 def process_upload(album_id: int):
-    files = request.files.getlist("file")
-    bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
-    category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
+    try:
 
-    for f in files:
-        photo = Photo(name=f.filename, album_id=album_id)
-        db.session.add(photo)
-        db.session.commit()
-        bucket.upload_bytes(
-            data_bytes=f.read(), file_name=f"{category.name}/{f.filename}"
-        )
+        files = request.files.getlist("file")
+        bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+        category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
+
+        for f in files:
+            photo = Photo(name=f.filename, album_id=album_id)
+            db.session.add(photo)
+            db.session.commit()
+            bucket.upload_bytes(
+                data_bytes=f.read(), file_name=f"{category.name}/{f.filename}"
+            )
+    except IntegrityError:
+        flash("Can't upload a photo to an album", "error")
 
     return redirect(url_for("photos"))
 
@@ -127,15 +131,18 @@ def remove_album(album_id: int):
 
 @app.post("/albums/<int:album_id>/remove")
 def remove_photo(album_id: int):
-    bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+    try:
+        bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
 
-    photo = db.session.query(Photo).filter_by(album_id=album_id).first()
-    db.session.delete(photo)
-    db.session.commit()
+        photo = db.session.query(Photo).filter_by(album_id=album_id).first()
+        db.session.delete(photo)
+        db.session.commit()
 
-    category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
-    file = bucket.get_file_info_by_name(f"{category.name}/{photo.name}")
-    file.delete()
+        category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
+        file = bucket.get_file_info_by_name(f"{category.name}/{photo.name}")
+        file.delete()
+    except IntegrityError:
+        flash("Can't delete the photo from the album", "error")
 
     return redirect(url_for("album_page", album_id=album_id))
 
