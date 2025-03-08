@@ -11,7 +11,8 @@ img{
     cursor: pointer;
     width: 300px;
     height: 300px;
-    z-index: -1;
+    position: relative;
+    z-index: 1;
 }
 
 .remove-photo{
