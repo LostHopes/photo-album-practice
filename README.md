@@ -60,8 +60,7 @@ sudo docker run yourname
 
 # Known issues
 
-- Remove particular photo by filename or id
-- Remove the folder with category when album is deleted
+- [ ] Remove particular photo by filename or id
 
 # References
 
