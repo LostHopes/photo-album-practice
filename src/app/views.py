@@ -61,18 +61,22 @@ def album_page(album_id: int):
 @login_required
 def process_upload(album_id: int):
     try:
+        form = UploadForm()
+        
+        if form.validate():
+            files = request.files.getlist("file")
+            bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+            category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
 
-        files = request.files.getlist("file")
-        bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
-        category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
-
-        for f in files:
-            photo = Photo(name=f.filename, album_id=album_id)
-            db.session.add(photo)
-            db.session.commit()
-            bucket.upload_bytes(
-                data_bytes=f.read(), file_name=f"{category.name}/{f.filename}"
-            )
+            for f in files:
+                photo = Photo(name=f.filename, album_id=album_id)
+                db.session.add(photo)
+                db.session.commit()
+                bucket.upload_bytes(
+                    data_bytes=f.read(), file_name=f"{category.name}/{f.filename}"
+                )
+            flash("The files was successfully uploaded", "success")
+            
     except IntegrityError:
         flash("Can't upload a photo to an album", "error")
 

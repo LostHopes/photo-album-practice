@@ -15,6 +15,7 @@
 {% block content %}
 
 <form method="post" enctype="multipart/form-data" class="form form-up">
+    {{ form.csrf_token }}
     <div class="form-upload">
         {{ form.file.label }}
         {{ form.file }}
