@@ -40,13 +40,13 @@ def album_page(album_id: int):
     form = UploadForm()
     bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
     folder = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
-    names = db.session.query(Photo).filter_by(album_id=album_id).all()
+    photos = db.session.query(Photo).filter_by(album_id=album_id).all()
 
     urls: list[str] = []
     token = b2.account_info.get_account_auth_token()
-    for image in names:
+    for photo in photos:
         urls.append(
-            f"{bucket.get_download_url(f'{folder.name}/{image.name}')}?Authorization={token}"
+            f"{bucket.get_download_url(f'{folder.name}/{photo.name}')}?Authorization={token}"
         )
 
     if form.validate_on_submit():
@@ -142,18 +142,22 @@ def remove_album(album_id: int):
 
 @app.post("/albums/<int:album_id>/remove")
 def remove_photo(album_id: int):
+    filename = request.form.get('filename')
     try:
         bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
-
-        photo = db.session.query(Photo).filter_by(album_id=album_id).first()
-        db.session.delete(photo)
-        db.session.commit()
-
         category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
-        file = bucket.get_file_info_by_name(f"{category.name}/{photo.name}")
-        file.delete()
+        photo = db.session.query(Photo).filter_by(name=filename, album_id=album_id).first()
+
+        if photo:
+            db.session.delete(photo)
+            db.session.commit()
+
+            file = bucket.get_file_info_by_name(f"{category.name}/{filename}")
+            file.delete()
+
     except IntegrityError:
         flash("Can't delete the photo from the album", "error")
+        db.session.rollback()
 
     return redirect(url_for("album_page", album_id=album_id))
 
