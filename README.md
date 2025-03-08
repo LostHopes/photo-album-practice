@@ -58,6 +58,11 @@ sudo docker built -t yourname .
 sudo docker run yourname
 ```
 
+# Known issues
+
+- Remove particular photo by filename or id
+- Remove the folder with category when album is deleted
+
 # References
 
 1. [B2SDK Documentation](https://b2-sdk-python.readthedocs.io)
