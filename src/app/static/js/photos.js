@@ -2,8 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let photos = document.querySelectorAll(".photo");
 
     photos.forEach(photo => {
-        photo.style.transition = "transform 0.2s ease-out";
-        photo.style.transformStyle = "preserve-3d";
 
         const followCursor = (event) => {
             const rect = photo.getBoundingClientRect();
@@ -16,22 +14,21 @@ document.addEventListener("DOMContentLoaded", function () {
             const relativeX = mouseX / photoWidth - 0.5;
             const relativeY = mouseY / photoHeight - 0.5;
 
-            const rotateY = relativeX * 20;
-            const rotateX = -relativeY * 20;
+            const rotateY = Math.round(relativeX * 20);
+            const rotateX = Math.round(-relativeY * 20);
 
-            photo.style.transform = 
+            photo.style.transform =
                 `perspective(1000px)
                 rotateX(${rotateX}deg)
                 rotateY(${rotateY}deg)
-                scale(1.05)`;
+                `;
         };
 
         const resetTransform = () => {
-            photo.style.transform = 
-            "perspective(1000px)\
+            photo.style.transform =
+                "perspective(1000px)\
             rotateX(0deg)\
-            rotateY(0deg)\
-            scale(1)";
+            rotateY(0deg)";
         };
 
         photo.addEventListener("mousemove", followCursor, false);
