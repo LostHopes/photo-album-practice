@@ -27,10 +27,7 @@ def test_login(client):
 
 
 def test_logout(client):
-    response = client.post(
-        "/logout/",
-        follow_redirects=True
-    )
+    response = client.post("/logout/", follow_redirects=True)
 
     assert response.status_code == 200
     assert response.request.path == "/login/"
