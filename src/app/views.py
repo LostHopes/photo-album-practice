@@ -123,13 +123,20 @@ def process_album():
 @login_required
 def remove_album(album_id: int):
     try:
+        bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+        category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
+        
+        for folder, _ in bucket.ls(f"{category.name}/", recursive=True):
+            if folder is not None:
+                bucket.delete_file_version(folder.id_, folder.file_name)
+
         album = db.session.query(PhotoAlbum).filter_by(id=album_id).first()
         db.session.delete(album)
         db.session.commit()
         flash("The album was successfully deleted", "success")
 
     except Exception as e:
-        flash("Failed to remove the album", "error")
+        flash(f"Failed to remove the album", "error")
     return redirect(url_for("photos"))
 
 
