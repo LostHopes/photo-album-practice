@@ -92,8 +92,8 @@ class UploadForm(FlaskForm):
         validators=[
             DataRequired(),
             FileAllowed(
-                ["jpg", "png", "jpeg"],
-                message="File extension isn't in the list: jpg, jpeg, png",
+                ["jpg", "png", "jpeg", "webp"],
+                message="File extension isn't in the list: jpg, jpeg, png, webp",
             ),
         ],
         render_kw={"multiple": True},
