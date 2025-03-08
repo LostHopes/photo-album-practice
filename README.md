@@ -58,6 +58,14 @@ sudo docker built -t yourname .
 sudo docker run yourname
 ```
 
+# Testing an app
+
+Configuration can be modified in **pyproject.toml** file
+
+```bash
+pytest
+```
+
 # Known issues
 
 - [ ] Remove particular photo by filename or id
