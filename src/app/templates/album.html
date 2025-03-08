@@ -8,22 +8,30 @@
 
 {% endblock %}
 
+{% block js %}
+<script src="{{ url_for('static', filename='js/photos.js') }}"></script>
+{% endblock %}
+
 {% block content %}
 
 <form method="post" enctype="multipart/form-data" class="form form-up">
+    {{ form.csrf_token }}
     <div class="form-upload">
         {{ form.file.label }}
         {{ form.file }}
     </div>
     <div>
-        {{ form.submit }}
+        {{ form.submit(class="upload") }}
     </div>
 </form>
 
 {% if urls %}
 <div class="img-container">
     {% for url in urls %}
-        <img src="{{ url }}" alt="Image">
+    <form action="{{ url_for('remove_photo', album_id=album_id) }}" method="post" class="remove-photo">
+        <img src="{{ url }}" alt="Image" class="photo">
+        <input type="submit" value="X">
+    </form>
     {% endfor %}
 </div>
 {% endif %}

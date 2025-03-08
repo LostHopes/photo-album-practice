@@ -24,4 +24,6 @@ class DevConfig(BaseConfig):
 
 
 class TestConfig(BaseConfig):
+    SECRET_KEY = "yoursecretkey"
     WTF_CSRF_ENABLED = False
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"

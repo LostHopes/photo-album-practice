@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from b2sdk.v2 import B2Api, B2Folder
 from app import app, b2, db
 from app.forms import RegisterForm, LoginForm, UploadForm, AlbumForm
-from app.models import User, Photo, PhotoAlbum
+from app.models import User, Photo, PhotoAlbum, AlbumCategory
 
 
 @app.get("/")
@@ -39,31 +39,46 @@ def album_page(album_id: int):
     title: str = "Album"
     form = UploadForm()
     bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+    folder = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
     names = db.session.query(Photo).filter_by(album_id=album_id).all()
 
     urls: list[str] = []
     token = b2.account_info.get_account_auth_token()
-    for name in names:
-        urls.append(f"{bucket.get_download_url(name.image)}?Authorization={token}")
+    for image in names:
+        urls.append(
+            f"{bucket.get_download_url(f'{folder.name}/{image.name}')}?Authorization={token}"
+        )
 
     if form.validate_on_submit():
         return redirect("process_upload", album_id=album_id)
 
-    return render_template("album.html", title=title, form=form, urls=urls)
+    return render_template(
+        "album.html", title=title, form=form, urls=urls, album_id=album_id
+    )
 
 
 @app.post("/albums/<int:album_id>/")
 @login_required
 def process_upload(album_id: int):
-    files = request.files.getlist("file")
+    try:
+        form = UploadForm()
+        
+        if form.validate():
+            files = request.files.getlist("file")
+            bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+            category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
 
-    bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
-
-    for f in files:
-        photo = Photo(image=f.filename, album_id=album_id)
-        db.session.add(photo)
-        db.session.commit()
-        bucket.upload_bytes(f.read(), f.filename)
+            for f in files:
+                photo = Photo(name=f.filename, album_id=album_id)
+                db.session.add(photo)
+                db.session.commit()
+                bucket.upload_bytes(
+                    data_bytes=f.read(), file_name=f"{category.name}/{f.filename}"
+                )
+            flash("The files was successfully uploaded", "success")
+            
+    except IntegrityError:
+        flash("Can't upload a photo to an album", "error")
 
     return redirect(url_for("photos"))
 
@@ -92,12 +107,55 @@ def process_album():
         db.session.add(album)
         db.session.commit()
 
+        album_category = AlbumCategory(name=category, album_id=album.id)
+        db.session.add(album_category)
+        db.session.commit()
+
     except IntegrityError:
         flash("Album with a given name already exist", "error")
         return redirect(url_for("photos"))
 
     flash("Album was created successfully", "success")
     return redirect(url_for("photos"))
+
+
+@app.post("/albums/remove/<int:album_id>/")
+@login_required
+def remove_album(album_id: int):
+    try:
+        bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+        category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
+        
+        for folder, _ in bucket.ls(f"{category.name}/", recursive=True):
+            if folder is not None:
+                bucket.delete_file_version(folder.id_, folder.file_name)
+
+        album = db.session.query(PhotoAlbum).filter_by(id=album_id).first()
+        db.session.delete(album)
+        db.session.commit()
+        flash("The album was successfully deleted", "success")
+
+    except Exception as e:
+        flash(f"Failed to remove the album", "error")
+    return redirect(url_for("photos"))
+
+
+@app.post("/albums/<int:album_id>/remove")
+def remove_photo(album_id: int):
+    try:
+        bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
+
+        photo = db.session.query(Photo).filter_by(album_id=album_id).first()
+        db.session.delete(photo)
+        db.session.commit()
+
+        category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
+        file = bucket.get_file_info_by_name(f"{category.name}/{photo.name}")
+        file.delete()
+    except IntegrityError:
+        flash("Can't delete the photo from the album", "error")
+
+    return redirect(url_for("album_page", album_id=album_id))
 
 
 @app.get("/register/")
@@ -131,7 +189,7 @@ def process_register():
 
     except IntegrityError:
         db.session.rollback()
-        flash("User already exist", "error")
+        flash("User with this username or email already exist", "error")
     return redirect(url_for("register_page"))
 
 

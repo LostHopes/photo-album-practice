@@ -14,7 +14,8 @@
     {% endblock %}
 
     {% block js %}
-    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
     {% endblock %}
 </head>
@@ -43,14 +44,19 @@
     </header>
     {% endblock %}
 
+    <main>
+        {% block content %}
 
-    {% block content %}
-
-
-    {% endblock %}
-
+        {% endblock %}
+    </main>
 
     {% block footer %}
+
+    <footer>
+        <div class="copyright">
+            &copy Photo albums 2025
+        </div>
+    </footer>
 
     {% endblock %}
 

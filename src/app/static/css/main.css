@@ -1,6 +1,36 @@
 :root {
 }
 
-html, body{
-    margin: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+main{
+  padding-bottom: 50px;
+}
+
+div[class^="alert-"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5vh;
+}
+
+div[class^="alert-"] > .alert-close {
+  margin-left: 8px;
+}
+
+.alert-success {
+}
+
+.alert-error {
+}
+
+.alert-close {
+  border: 3px solid black;
+  background-color: red;
+  color: white;
+  border-radius: 6px;
 }
