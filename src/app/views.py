@@ -25,11 +25,8 @@ def account():
 @login_required
 def photos():
     title: str = "Albums"
-
     form = AlbumForm()
-
     albums = db.session.query(PhotoAlbum).filter_by(user_id=current_user.get_id()).all()
-
     return render_template("photos.html", title=title, form=form, albums=albums)
 
 
@@ -39,18 +36,29 @@ def album_page(album_id: int):
     title: str = "Album"
     form = UploadForm()
     bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
-    folder = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
-    photos = db.session.query(Photo).filter_by(album_id=album_id).all()
+
+    # User can't see albums of other users.
+    # Rewrite this logic with public and private options (and add access field) in the model
+    album = (
+        db.session.query(PhotoAlbum)
+        .filter_by(user_id=current_user.id, id=album_id)
+        .first_or_404(description="Album doesn't exist or you don't have access")
+    )
+
+    album_data = (
+        db.session.query(AlbumCategory, Photo)
+        .join(Photo, AlbumCategory.album_id == Photo.album_id)
+        .filter(AlbumCategory.album_id == album_id)
+        .all()
+    )
 
     urls: list[str] = []
     token = b2.account_info.get_account_auth_token()
-    for photo in photos:
-        urls.append(
-            f"{bucket.get_download_url(f'{folder.name}/{photo.name}')}?Authorization={token}"
-        )
 
-    if form.validate_on_submit():
-        return redirect("process_upload", album_id=album_id)
+    for category, photo in album_data:
+        urls.append(
+            f"{bucket.get_download_url(f'{category.name}/{photo.name}')}?Authorization={token}"
+        )
 
     return render_template(
         "album.html", title=title, form=form, urls=urls, album_id=album_id
@@ -62,11 +70,13 @@ def album_page(album_id: int):
 def process_upload(album_id: int):
     try:
         form = UploadForm()
-        
+
         if form.validate():
             files = request.files.getlist("file")
             bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
-            category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
+            category = (
+                db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
+            )
 
             for f in files:
                 photo = Photo(name=f.filename, album_id=album_id)
@@ -76,9 +86,10 @@ def process_upload(album_id: int):
                     data_bytes=f.read(), file_name=f"{category.name}/{f.filename}"
                 )
             flash("The files was successfully uploaded", "success")
-            
+
     except IntegrityError:
         flash("Can't upload a photo to an album", "error")
+        db.session.rollback()
 
     return redirect(url_for("photos"))
 
@@ -110,12 +121,12 @@ def process_album():
         album_category = AlbumCategory(name=category, album_id=album.id)
         db.session.add(album_category)
         db.session.commit()
+        flash("Album was created successfully", "success")
 
     except IntegrityError:
         flash("Album with a given name already exist", "error")
-        return redirect(url_for("photos"))
+        db.session.rollback()
 
-    flash("Album was created successfully", "success")
     return redirect(url_for("photos"))
 
 
@@ -125,7 +136,7 @@ def remove_album(album_id: int):
     try:
         bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
         category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
-        
+
         for folder, _ in bucket.ls(f"{category.name}/", recursive=True):
             if folder is not None:
                 bucket.delete_file_version(folder.id_, folder.file_name)
@@ -142,13 +153,20 @@ def remove_album(album_id: int):
 
 @app.post("/albums/<int:album_id>/remove")
 def remove_photo(album_id: int):
-    filename = request.form.get('filename')
+    filename = request.form.get("filename")
     try:
         bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
-        category = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
-        photo = db.session.query(Photo).filter_by(name=filename, album_id=album_id).first()
 
-        if photo:
+        result = (
+            db.session.query(AlbumCategory, Photo)
+            .join(AlbumCategory, AlbumCategory.album_id == Photo.album_id)
+            .filter(Photo.name == filename, Photo.album_id == album_id)
+            .first()
+        )
+
+        if result:
+            category, photo = result
+
             db.session.delete(photo)
             db.session.commit()
 
