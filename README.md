@@ -76,3 +76,4 @@ pytest
 2. [Writing GitHub Workflows](https://docs.github.com/en/actions/writing-workflows)
 3. [Pytest Documentation](https://docs.pytest.org)
 4. [Docker Documentation](https://docs.docker.com)
+5. [Uv Documentation](https://docs.astral.sh/uv/)
