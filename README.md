@@ -68,7 +68,7 @@ pytest
 
 # Known issues
 
-- [ ] Remove particular photo by filename or id
+- [x] Remove particular photo by filename or id
 
 # References
 
