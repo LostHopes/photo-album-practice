@@ -33,10 +33,10 @@
   display: flex;
   justify-content: center;
   place-items: center;
-  width: 10em;
-  height: 10em;
+  width: 14em;
+  height: 14em;
   background-color: #b5179e;
-  transition: all 0.5s;
+  transition: all 0.3s linear;
   box-shadow: 8px 5px 10px 0px #000000;
 }
 
