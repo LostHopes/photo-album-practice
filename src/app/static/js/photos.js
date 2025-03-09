@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 `perspective(1000px)
                 rotateX(${rotateX}deg)
                 rotateY(${rotateY}deg)
+                scale(1.05)
                 `;
         };
 
