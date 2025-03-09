@@ -27,3 +27,9 @@ header{
   text-decoration: underline;
   color:#4cc9f0;
 }
+
+@media screen and (max-width: 400px) {
+  .menu{
+    gap: 20px;
+  }
+}
