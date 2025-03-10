@@ -27,7 +27,12 @@ def photos():
     title: str = "Albums"
     form = AlbumForm()
     albums = db.session.query(PhotoAlbum).filter_by(user_id=current_user.get_id()).all()
-    return render_template("photos.html", title=title, form=form, albums=albums)
+
+    count_photos = lambda id: db.session.query(Photo).filter_by(album_id=id).count()
+
+    return render_template(
+        "photos.html", title=title, form=form, albums=albums, count_photos=count_photos
+    )
 
 
 @app.get("/albums/<int:album_id>/")
