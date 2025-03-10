@@ -24,6 +24,9 @@ test = [
 lint = [
     "ruff>=0.9.5",
 ]
+prod = [
+    "gunicorn>=23.0.0",
+]
 
 [tool.pytest.ini_options]
 addopts = "-v --cov-fail-under=50 --cov=app"
