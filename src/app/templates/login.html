@@ -16,24 +16,26 @@
 {% block content %}
 {{ super() }}
 
-<form class="form content" method="post">
-    {{ form.csrf_token }}
-    {% include "_flashes.html" %}
-    <div>
-        {{ form.email.label }}
-        {{ form.email(class="text-input") }}
-    </div>
-    <div>
-        {{ form.password.label }}
-        {{ form.password(class="text-input") }}
-    </div>
-    <div>
-        {{ form.stay_logged_in }}
-        {{ form.stay_logged_in.label }}
-    </div>
-    <div>
-        {{ form.submit(class="login") }}
-    </div>
-</form>
+{% from "_fields.html" import render_field %}
+
+<div>
+    <form class="form content" method="post">
+        {{ form.csrf_token }}
+        {% include "_flashes.html" %}
+      
+
+        {{ render_field(form.email) }}  
+        {{ render_field(form.password) }}
+      
+        <div>
+          {{ form.stay_logged_in }}
+          {{ form.stay_logged_in.label }}
+        </div>
+      
+        <div>
+          {{ form.submit(class="login") }}
+        </div>
+    </form>
+</div>
 
 {% endblock %}

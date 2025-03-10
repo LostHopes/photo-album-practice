@@ -10,20 +10,12 @@
 
 {% block content %}
 
+{% from "_fields.html" import render_field %}
+
 <form class="form content" method="post">
-    <div>
-        {{ form.name.label }}
-        {{ form.name(class="text-input") }}
-        {% if form.name.errors %}
-            {% for err in form.name.errors %}
-                <div class="valid-warn">{{ err }}</div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div>
-        {{ form.category.label }}
-        {{ form.category(class="text-input") }}
-    </div>
+
+    {{ render_field(form.name) }}
+    {{ render_field(form.category) }}
     <div>
         {{ form.submit(class="create-album-submit") }}
     </div>

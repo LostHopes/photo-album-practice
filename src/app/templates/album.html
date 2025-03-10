@@ -28,11 +28,13 @@
 {% if urls %}
 <div class="img-container">
     {% for url in urls %}
-    <form action="{{ url_for('remove_photo', album_id=album_id) }}" method="post" class="remove-photo">
-        <img src="{{ url }}" alt="Image" class="photo">
-        <input type="hidden" name="filename" value="{{ url.split('/')[-1].split('?')[0] }}">
-        <input type="submit" value="X">
-    </form>
+    <div class="photo-actions">
+        <form id="remove-form" action="{{ url_for('remove_photo', album_id=album_id) }}" method="post">
+            <img src="{{ url }}" alt="Image" class="photo">
+            <input type="hidden" name="filename" value="{{ url.split('/')[-1].split('?')[0] }}">
+            <input type="submit" value="X">
+        </form>
+    </div>
     {% endfor %}
 </div>
 {% endif %}

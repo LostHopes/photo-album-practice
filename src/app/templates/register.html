@@ -9,30 +9,17 @@
 
 {% block content %}
 
+{% from "_fields.html" import render_field %}
+
 <form class="form content" method="post">
     {{ form.csrf_token }}
     {% include "_flashes.html" %}
-    <div>
-        {{ form.username.label }}
-        {{ form.username(class="text-input") }}
-        <!-- {% if form.username.errors %}
-            {% for err in form.username.errors %}
-                <div class="valid-warn">{{ err }}</div>
-            {% endfor %}
-        {% endif %} -->
-    </div>
-    <div>
-        {{ form.email.label }}
-        {{ form.email(class="text-input") }}
-    </div>
-    <div>
-        {{ form.password.label }}
-        {{ form.password(class="text-input") }}
-    </div>
-    <div>
-        {{ form.confirm_password.label }}
-        {{ form.confirm_password(class="text-input") }}
-    </div>
+    
+        {{ render_field(form.username) }}
+        {{ render_field(form.email) }}
+        {{ render_field(form.password) }}
+        {{ render_field(form.confirm_password) }}
+
     <div>
         {{ form.accept_rules }}
         {{ form.accept_rules.label }}
