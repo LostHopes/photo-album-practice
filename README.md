@@ -1,5 +1,5 @@
-[!CAUTION]
-The project is still in development. Use it on your own risk.
+> [!CAUTION]
+> The project is still in development. Use it on your own risk.
 
 # Color palette
 
