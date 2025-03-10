@@ -37,3 +37,14 @@ div[class^="alert-"] > .alert-close {
   color: white;
   border-radius: 6px;
 }
+
+.errors {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: red;
+}
+
+.errors li {
+  font-size: 0.8em;
+}

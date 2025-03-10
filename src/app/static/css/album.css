@@ -15,7 +15,7 @@ img{
     z-index: 1;
 }
 
-.remove-photo{
+.photo-actions form {
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -23,7 +23,7 @@ img{
     gap: 10px;
 }
 
-.remove-photo input{
+#remove-form input{
     background-color: red;
     color: white;
     border-radius: 4px;
@@ -39,4 +39,8 @@ img{
 
 .photo:hover{
     transform: scale(1.05);
+}
+
+.download-photo{
+
 }
