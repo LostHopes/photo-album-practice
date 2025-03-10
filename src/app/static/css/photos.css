@@ -32,12 +32,26 @@
 .album {
   display: flex;
   justify-content: center;
-  place-items: center;
+  align-items: center;
+  flex-flow: column nowrap;
   width: 14em;
-  height: 14em;
+  height: 10em;
   background-color: #b5179e;
   transition: all 0.3s linear;
   box-shadow: 8px 5px 10px 0px #000000;
+  border-radius: 5px;
+  position: relative;
+}
+
+.album::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  width: 5em;
+  height: 2em;
+  background-color: #b5179e;
+  border-radius: 5px 5px 0 0;
 }
 
 .album:hover {
