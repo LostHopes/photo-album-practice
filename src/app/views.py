@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, abort, request
+from flask import render_template, redirect, url_for, flash, abort, request, send_file
 from flask_login import login_required, login_user, logout_user, current_user
 from flask_bcrypt import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
@@ -185,27 +185,16 @@ def remove_photo(album_id: int):
     return redirect(url_for("album_page", album_id=album_id))
 
 
-@app.get("/register/")
+@app.route("/register/", methods=["GET", "POST"])
 def register_page():
     title: str = "Register"
     form = RegisterForm()
 
-    if form.validate_on_submit():
-        return redirect(url_for("register_page"))
-
-    return render_template("register.html", title=title, form=form)
-
-
-@app.post("/register/")
-def process_register():
     try:
-        form = RegisterForm(request.form)
-
-        if form.validate():
+        if form.validate_on_submit():
             username = form.username.data
             email = form.email.data
             password_hash = generate_password_hash(form.password.data)
-            confirm_password = form.confirm_password.data
 
             user = User(username=username, email=email, password=password_hash)
             db.session.add(user)
@@ -216,8 +205,9 @@ def process_register():
 
     except IntegrityError:
         db.session.rollback()
-        flash("User with this username or email already exist", "error")
-    return redirect(url_for("register_page"))
+        flash("User with this username or email already exists", "error")
+
+    return render_template("register.html", title=title, form=form)
 
 
 @app.get("/login/")
