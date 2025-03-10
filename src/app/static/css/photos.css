@@ -76,7 +76,6 @@
   box-shadow: 1px 1px 1px 1px black;
   transition: 0.3s all;
   cursor: pointer;
-  margin-top: 10px;
 }
 
 #remove-album:hover {
@@ -85,4 +84,8 @@
 .album:hover #remove-album {
   visibility: visible;
   opacity: 1;
+}
+
+.album label div{
+  margin: 10px;
 }
