@@ -43,7 +43,7 @@ def album_page(album_id: int):
     bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
 
     # User can't see albums of other users.
-    # Rewrite this logic with public and private options (and add access field) in the model
+    # Rewrite this logic with public and private options (add access field to the album) in the model
     album = (
         db.session.query(PhotoAlbum)
         .filter_by(user_id=current_user.id, id=album_id)
