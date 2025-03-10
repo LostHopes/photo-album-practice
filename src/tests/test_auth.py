@@ -31,3 +31,4 @@ def test_logout(client):
 
     assert response.status_code == 200
     assert response.request.path == "/login/"
+    assert "Login" in response.get_data(as_text=True)
