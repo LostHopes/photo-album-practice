@@ -17,10 +17,10 @@
 
 ## Additional tasks:
 
-- [] Add the ability to share individual photos;
-- [] Add the ability to share entire folders (several users have access and they all see all the photos in the folder);
-- [] Send emails when a photo is uploaded to a shared folder;
-- [] Add the ability to control who can delete photos and folders from a shared folder (by default, only the person who created and shared the folder).
+- [ ] Add the ability to share individual photos;
+- [ ] Add the ability to share entire folders (several users have access and they all see all the photos in the folder);
+- [ ] Send emails when a photo is uploaded to a shared folder;
+- [ ] Add the ability to control who can delete photos and folders from a shared folder (by default, only the person who created and shared the folder).
 
 # Run locally:
 
