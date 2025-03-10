@@ -1,3 +1,6 @@
+[!CAUTION]
+The project is still in development. Use it on your own risk.
+
 # Color palette
 
 [Pixelied](https://pixelied.com/colors/palette-visualizer/f72585-b5179e-7209b7-560bad-480ca8-3a0ca3-3f37c9-4361ee-4895ef-4cc9f0)
@@ -6,18 +9,18 @@
 
 ## Minimum requirements:
 
-1. Registration and authorisation of users to see only their photos;
-2. The main page that tells about the service (available to all users) and the photo album page (only for registered users);
-3. Ability to upload photos;
-4. Ability to create folders for grouping photos (you can also create folders in folders);
-5. Uploaded photos can be stored in the cloud (e.g. s3).
+- [x] Registration and authorisation of users to see only their photos;
+- [x] The main page that tells about the service (available to all users) and the photo album page (only for registered users);
+- [x] Ability to upload photos;
+- [x] Ability to create folders for grouping photos (you can also create folders in folders);
+- [x] Uploaded photos can be stored in the cloud (e.g. s3).
 
 ## Additional tasks:
 
-1. Add the ability to share individual photos;
-2. Add the ability to share entire folders (several users have access and they all see all the photos in the folder);
-3. Send emails when a photo is uploaded to a shared folder;
-4. Add the ability to control who can delete photos and folders from a shared folder (by default, only the person who created and shared the folder).
+- [] Add the ability to share individual photos;
+- [] Add the ability to share entire folders (several users have access and they all see all the photos in the folder);
+- [] Send emails when a photo is uploaded to a shared folder;
+- [] Add the ability to control who can delete photos and folders from a shared folder (by default, only the person who created and shared the folder).
 
 # Run locally:
 
