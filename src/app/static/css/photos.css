@@ -79,6 +79,7 @@
 }
 
 #remove-album:hover {
+  background-color: red;
 }
 
 .album:hover #remove-album {
