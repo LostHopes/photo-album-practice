@@ -8,8 +8,13 @@
 
 {% block content %}
 
-<form class="form form-center" method="post" action="{{ url_for('logout') }}">
-    <input type="submit" value="Logout" class="logout">
-</form>
+<div class="form form-center">
+    <div>Logged in as {{ username }}</div>
+    <div>
+        <form method="post" action="{{ url_for('logout') }}">
+            <input type="submit" value="Logout" class="logout">
+        </form>
+    </div>
+</div>
 
 {% endblock %}

@@ -18,7 +18,7 @@ def home():
 @login_required
 def account():
     title: str = "Account"
-    return render_template("account.html", title=title)
+    return render_template("account.html", title=title, username=current_user.username)
 
 
 @app.get("/albums/")
