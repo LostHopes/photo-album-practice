@@ -3,7 +3,7 @@
 {% block css %}
 {{ super() }}
 
-<link rel='stylesheet' type='text/css' href='{{ url_for('static', filename="css/forms.css") }}'>
+<link rel='stylesheet' type='text/css' href='{{ url_for('static', filename="css/forms.css" ) }}'>
 
 {% endblock %}
 
@@ -16,7 +16,7 @@
 {% block content %}
 {{ super() }}
 
-<form class="form form-center" method="post">
+<form class="form content" method="post">
     {{ form.csrf_token }}
     {% include "_flashes.html" %}
     <div>
