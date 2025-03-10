@@ -48,7 +48,7 @@ pip install --upgrade pip uv
 
 ```bash
 uv sync --all-groups
-uv run python src/wsgi.py
+uv run src/wsgi.py
 ```
 
 ## With Docker
