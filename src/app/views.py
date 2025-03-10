@@ -99,7 +99,7 @@ def process_upload(album_id: int):
     return redirect(url_for("photos"))
 
 
-@app.get("/albums/create")
+@app.get("/albums/create/")
 @login_required
 def create_album():
     title: str = "Create album"
@@ -111,7 +111,7 @@ def create_album():
     return render_template("create.html", title=title, form=form)
 
 
-@app.post("/albums/create")
+@app.post("/albums/create/")
 @login_required
 def process_album():
     try:
@@ -156,7 +156,7 @@ def remove_album(album_id: int):
     return redirect(url_for("photos"))
 
 
-@app.post("/albums/<int:album_id>/remove")
+@app.post("/albums/<int:album_id>/remove/")
 def remove_photo(album_id: int):
     filename = request.form.get("filename")
     try:
