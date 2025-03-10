@@ -3,7 +3,7 @@
 {% block css %}
 {{ super() }}
 
-<link rel='stylesheet' type='text/css' href='{{ url_for('static', filename="css/home.css" ) }}'>
+<link rel='stylesheet' type='text/css' href='{{ url_for(' static', filename="css/home.css" ) }}'>
 
 {% endblock %}
 
@@ -14,16 +14,16 @@
     <div class="item">
         <p>
             Our aims to provide users with simple solution to store their photos.
-        You can make a private or public album and share it with the surroundings.
+            You can make a private or public album and share it with the surroundings.
         </p>
         <p>
             We provide:
-            <ul>
-                <li>Safe access to files stored on the cloud</li>
-                <li>Abilities to create and remove an album</li>
-                <li>Upload and remove photos</li>
-                <li>View the images in the album</li>
-            </ul>
+        <ul>
+            <li>Safe access to files stored on the cloud</li>
+            <li>Abilities to create and remove an album</li>
+            <li>Upload and remove photos</li>
+            <li>View the images in the album</li>
+        </ul>
         </p>
         <a href="{{ url_for('register_page') }}">Join now</a>
     </div>
