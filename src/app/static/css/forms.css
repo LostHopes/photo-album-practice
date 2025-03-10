@@ -7,6 +7,9 @@
 }
 
 .content {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
   height: 90vh;
 }
 
@@ -74,7 +77,7 @@ input[type="checkbox"] {
     width: 1em;
     height: 1em;
     vertical-align: -2px;
-  }
+}
 
 .form .text-input {
   display: flex;
@@ -88,8 +91,21 @@ input[type="checkbox"] {
   border-radius: 8px;
   background-color: #3a0ca3;
   color: white;
+  padding: 2vh;
 }
 
 .form-upload label {
   padding: 0.5em;
+}
+
+.form-login{
+  align-items: baseline;
+}
+
+.form-register{
+  align-items: baseline;
+}
+
+.form-create-album{
+  align-items: center;
 }
