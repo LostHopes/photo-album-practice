@@ -12,13 +12,15 @@
 
 {% from "_fields.html" import render_field %}
 
-<form class="form content" method="post">
+<div class="content">
+    <form class="form form-create-album" method="post">
 
-    {{ render_field(form.name) }}
-    {{ render_field(form.category) }}
-    <div>
-        {{ form.submit(class="create-album-submit") }}
-    </div>
-</form>
+        {{ render_field(form.name) }}
+        {{ render_field(form.category) }}
+        <div>
+            {{ form.submit(class="create-album-submit") }}
+        </div>
+    </form>
+</div>
 
 {% endblock %}
