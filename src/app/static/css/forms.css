@@ -98,10 +98,7 @@ input[type="checkbox"] {
   padding: 0.5em;
 }
 
-.form-login{
-  align-items: baseline;
-}
-
+.form-login,
 .form-register{
   align-items: baseline;
 }
