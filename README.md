@@ -5,6 +5,13 @@
 
 [Pixelied](https://pixelied.com/colors/palette-visualizer/f72585-b5179e-7209b7-560bad-480ca8-3a0ca3-3f37c9-4361ee-4895ef-4cc9f0)
 
+# Tech stack
+
+- plain HTML (with Jinja templates), regular CSS and JS for frontend
+- the backend runs on Flask
+- images are stored on the Backblaze B2 cloud provider
+- SQLite is a database solution, but it easily replaceable
+
 # Functional requirements
 
 ## Minimum requirements:
@@ -72,6 +79,14 @@ pytest
 # Known issues
 
 - [x] Remove particular photo by filename or id
+
+# License
+
+The project licensed under MIT. See [LICENSE](LICENSE)
+
+# Contribute
+
+Any contribution is appreciated. Feel free to open an issue or PR
 
 # References
 
