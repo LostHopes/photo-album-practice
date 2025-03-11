@@ -12,8 +12,8 @@
 {% from "_fields.html" import render_field %}
 
 <div class="content">
-    {% include "_flashes.html" %}
     <form class="form form-register" method="post">
+        {% include "_flashes.html" %}
         {{ form.csrf_token }}
         
             {{ render_field(form.username) }}

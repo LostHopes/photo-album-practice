@@ -99,8 +99,8 @@ input[type="checkbox"] {
 }
 
 .form-login,
-.form-register{
-  align-items: baseline;
+.form-register {
+  align-items: center;
 }
 
 .form-create-album{

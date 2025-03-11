@@ -21,7 +21,7 @@ div[class^="alert-"] {
   padding: 5vh;
 }
 
-div[class^="alert-"] > .alert-close {
+div[class^="alert-"] .alert-close {
   margin-left: 8px;
 }
 

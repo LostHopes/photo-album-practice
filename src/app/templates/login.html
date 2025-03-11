@@ -22,7 +22,6 @@
     <form class="form form-login" method="post">
         {{ form.csrf_token }}
         {% include "_flashes.html" %}
-      
 
         {{ render_field(form.email) }}  
         {{ render_field(form.password) }}
