@@ -11,11 +11,11 @@ COPY pyproject.toml uv.lock /app/
 RUN python -m venv $VIRTUAL_ENV\
     && source $VIRTUAL_ENV/bin/activate\
     && pip install uv\
-    && uv sync
+    && uv sync --group prod
     
 COPY . /app/
 EXPOSE 5000
-CMD [ "python", "src/wsgi.py" ]
+CMD [ "gunicorn", "--chdir", "src", "wsgi:app" ]
 
 
 
