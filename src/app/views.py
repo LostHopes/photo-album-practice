@@ -164,6 +164,7 @@ def remove_album(album_id: int):
         flash("The album was successfully deleted", "success")
 
     except Exception as e:
+        app.logger.error(f"The album can't be deleted {e}")
         flash(f"Failed to remove the album", "error")
     return redirect(url_for("photos"))
 
@@ -212,6 +213,7 @@ def register_page():
             db.session.add(user)
             db.session.commit()
 
+            app.logger.info(f"The user {username} has been registered")
             flash("User successfully registered", "success")
             return redirect(url_for("login_page"))
 
@@ -246,6 +248,7 @@ def process_login():
 
     login_user(user, remember=form.stay_logged_in.data)
 
+    app.logger.info(f"User {user.username} has logged in")
     flash("User successfully logged in", "success")
     return redirect(url_for("photos"))
 
