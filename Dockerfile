@@ -16,4 +16,4 @@ RUN python -m venv $VIRTUAL_ENV\
     
 COPY . /app/
 EXPOSE 5000
-CMD [ "gunicorn", "--workers 2", "wsgi:app", "--bind", "0.0.0.0:5000", "--chdir", "src"]
+CMD [ "gunicorn", "--workers=2", "wsgi:app", "--bind", "0.0.0.0:5000", "--chdir", "src"]
