@@ -1,46 +1,71 @@
-.img-container{
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+.img-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
-img{
-    border-radius: 10px;
-    cursor: pointer;
-    width: 300px;
-    height: 300px;
-    position: relative;
-    z-index: 1;
+img {
+  border-radius: 10px;
+  cursor: pointer;
+  width: 300px;
+  height: 300px;
+  position: relative;
+  z-index: 1;
+}
+
+.photo-actions {
+  padding-right: 1vh;
+  padding-left: 1vh;
 }
 
 .photo-actions form {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
-#remove-form input{
-    background-color: red;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
+#remove-form input {
+  background-color: red;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.photo{
-    transition: transform 0.2s ease-out;
-    transform-style: preserve-3d;
-    transform: scale(1);
-    perspective: 1000px;
+.photo {
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+  transform: scale(1);
+  perspective: 1000px;
 }
 
-.photo:hover{
-    transform: scale(1.05);
+.photo:hover {
+  transform: scale(1.05);
 }
 
-.download-photo{
+.download-photo {
+}
 
+@media screen and (max-width: 400px) {
+  .photo {
+    width: 70vw;
+    height: 25vh;
+  }
+  .form-upload {
+    width: 60vw;
+  }
+}
+
+@media screen and (min-width: 968px) {
+  .photo-actions:hover #remove-form input {
+    visibility: visible;
+  }
+
+  #remove-form input {
+    visibility: hidden;
+  }
 }
