@@ -60,6 +60,7 @@ def album_page(album_id: int):
     urls: list[str] = []
     token = b2.account_info.get_account_auth_token()
 
+    # Here Authorization only for private bucket
     for category, photo in album_data:
         urls.append(
             f"{bucket.get_download_url(f'{category.name}/{photo.name}')}?Authorization={token}"
