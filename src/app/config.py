@@ -1,7 +1,14 @@
 import os
+import logging
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logging.basicConfig(
+    filename="app.log",
+    level=logging.ERROR,
+    format="%(asctime)s %(levelname)s %(name)s : %(message)s",
+)
 
 
 class BaseConfig:
