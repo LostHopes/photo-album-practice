@@ -41,20 +41,27 @@ B2_KEY="" # API key
 BUCKET_ID="" # id of a bucket
 ```
 
-1. Create and activate virtual environment
+1. Clone the repository
+
+```bash
+git clone https://github.com/LostHopes/photo-album-practice.git photo-album; cd photo-album
+```
+
+
+2. Create and activate virtual environment
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 ```
 
-2. Install uv and update python package manager
+3. Install uv and update python package manager
 
 ```bash
 pip install --upgrade pip uv
 ```
 
-3. Install dependencies and run the project
+4. Install dependencies and run the project
 
 ```bash
 uv sync --all-groups
