@@ -44,7 +44,8 @@ BUCKET_ID="" # id of a bucket
 1. Clone the repository
 
 ```bash
-git clone https://github.com/LostHopes/photo-album-practice.git photo-album; cd photo-album
+git clone https://github.com/LostHopes/photo-album-practice.git photo-album
+cd photo-album
 ```
 
 
