@@ -1,0 +1,16 @@
+.pages {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+  padding: 50px;
+  font-size: larger;
+}
+
+.pages a {
+  padding-right: 10px;
+  text-decoration: none;
+}
+
+.pages a:hover {
+  text-decoration: underline;
+}

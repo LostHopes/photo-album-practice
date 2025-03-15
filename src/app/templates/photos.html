@@ -5,6 +5,7 @@
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/photos.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pagination.css') }}">
 
 {% endblock %}
 
@@ -37,6 +38,16 @@
         </div>
     </a>
     {% endfor %}
+</div>
+
+<div class="pages">
+    {% if albums.total > 9 %}
+        <a href="{{ url_for('photos', page=1) }}"><<</a>
+        {% for album_page in albums.iter_pages() %}
+            <a href="{{ url_for('photos', page=album_page) }}">{{ album_page }}</a>
+        {% endfor %}
+        <a href="{{ url_for('photos', page=albums.pages) }}">>></a>
+    {% endif %}
 </div>
 
 {% endblock %}

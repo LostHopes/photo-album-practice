@@ -26,12 +26,25 @@ def account():
 def photos():
     title: str = "Albums"
     form = AlbumForm()
-    albums = db.session.query(PhotoAlbum).filter_by(user_id=current_user.get_id()).all()
+    per_page = 9
+    page = request.args.get("page", 1, int)
 
+    albums = db.paginate(
+        db.select(PhotoAlbum)
+        .order_by(PhotoAlbum.id)
+        .filter_by(user_id=current_user.get_id()),
+        per_page=per_page,
+        page=page,
+    )
     count_photos = lambda id: db.session.query(Photo).filter_by(album_id=id).count()
 
     return render_template(
-        "photos.html", title=title, form=form, albums=albums, count_photos=count_photos
+        "photos.html",
+        title=title,
+        form=form,
+        albums=albums,
+        count_photos=count_photos,
+        page=page,
     )
 
 
