@@ -42,6 +42,6 @@ class Photo(db.Model):
 class AlbumCategory(db.Model):
     __tablename__ = "album_category"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String)
+    category = db.Column(db.String)
     album_id = db.Column(db.Integer, db.ForeignKey("photo_album.id"))
     album = db.Relationship("PhotoAlbum", back_populates="category")

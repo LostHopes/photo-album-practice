@@ -74,9 +74,9 @@ def album_page(album_id: int):
     token = b2.account_info.get_account_auth_token()
 
     # Here Authorization only for private bucket
-    for category, photo in album_data:
+    for album, photo in album_data:
         urls.append(
-            f"{bucket.get_download_url(f'{category.name}/{photo.name}')}?Authorization={token}"
+            f"{bucket.get_download_url(f'{album.category}/{photo.name}')}?Authorization={token}"
         )
 
     return render_template(
@@ -93,16 +93,14 @@ def process_upload(album_id: int):
         if form.validate():
             files = request.files.getlist("file")
             bucket = b2.get_bucket_by_id(app.config["BUCKET_ID"])
-            category = (
-                db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
-            )
+            album = db.session.query(AlbumCategory).filter_by(album_id=album_id).first()
 
             for f in files:
                 photo = Photo(name=f.filename, album_id=album_id)
                 db.session.add(photo)
                 db.session.commit()
                 bucket.upload_bytes(
-                    data_bytes=f.read(), file_name=f"{category.name}/{f.filename}"
+                    data_bytes=f.read(), file_name=f"{album.category}/{f.filename}"
                 )
             flash("The files was successfully uploaded", "success")
 
@@ -137,7 +135,7 @@ def process_album():
         db.session.add(album)
         db.session.commit()
 
-        album_category = AlbumCategory(name=category, album_id=album.id)
+        album_category = AlbumCategory(category=category, album_id=album.id)
         db.session.add(album_category)
         db.session.commit()
         flash("Album was created successfully", "success")
