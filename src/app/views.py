@@ -182,12 +182,12 @@ def remove_photo(album_id: int):
         )
 
         if result:
-            category, photo = result
+            album, photo = result
 
             db.session.delete(photo)
             db.session.commit()
 
-            file = bucket.get_file_info_by_name(f"{category.name}/{filename}")
+            file = bucket.get_file_info_by_name(f"{album.category}/{filename}")
             file.delete()
 
     except IntegrityError:
