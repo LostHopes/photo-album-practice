@@ -250,6 +250,7 @@ def process_login():
 
     login_user(user, remember=form.stay_logged_in.data)
 
+    app.logger.info(f"User {user.username} has logged in")
     flash("User successfully logged in", "success")
     return redirect(url_for("photos"))
 
