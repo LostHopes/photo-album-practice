@@ -104,8 +104,9 @@ def process_upload(album_id: int):
                 )
             flash("The files was successfully uploaded", "success")
 
-    except IntegrityError:
+    except IntegrityError as e:
         flash("Can't upload a photo to an album", "error")
+        app.logger.error(f"Can't upload a photo: {e}")
         db.session.rollback()
 
     return redirect(url_for("photos"))
@@ -164,7 +165,7 @@ def remove_album(album_id: int):
         flash("The album was successfully deleted", "success")
 
     except Exception as e:
-        app.logger.error(f"The album can't be deleted {e}")
+        app.logger.error(f"The album can't be deleted: {e}")
         flash(f"Failed to remove the album", "error")
     return redirect(url_for("photos"))
 
@@ -191,8 +192,9 @@ def remove_photo(album_id: int):
             file = bucket.get_file_info_by_name(f"{album.category}/{filename}")
             file.delete()
 
-    except IntegrityError:
+    except IntegrityError as e:
         flash("Can't delete the photo from the album", "error")
+        app.logger.error(f"The photo can't be deleted: {e}")
         db.session.rollback()
 
     return redirect(url_for("album_page", album_id=album_id))
@@ -248,7 +250,6 @@ def process_login():
 
     login_user(user, remember=form.stay_logged_in.data)
 
-    app.logger.info(f"User {user.username} has logged in")
     flash("User successfully logged in", "success")
     return redirect(url_for("photos"))
 
