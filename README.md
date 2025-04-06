@@ -90,7 +90,7 @@ pytest
 
 # License
 
-The project licensed under MIT. See [LICENSE](LICENSE)
+The project licensed under MIT. (See [LICENSE](LICENSE))
 
 # Contribute
 
