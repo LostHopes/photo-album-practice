@@ -1,8 +1,3 @@
-from flask_login import login_user
-from app.user.models import User
-from app import db
-
-
 def test_login_page(client):
     response = client.get("/login/")
     assert "Email" in response.get_data(as_text=True)
