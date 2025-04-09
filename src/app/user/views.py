@@ -71,7 +71,6 @@ def logout():
     return redirect(url_for("user_bp.login_page"))
 
 
-
 @user_bp.get("/account/")
 @login_required
 def account():

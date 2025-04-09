@@ -6,4 +6,3 @@ from app import app
 def home():
     title: str = "Home"
     return render_template("home.html", title=title)
-

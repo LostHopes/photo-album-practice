@@ -26,7 +26,7 @@ def create_app(config_obj=None):
         from app.user import user_bp
         from app.album import album_bp
         from app import views, errors
-        
+
         app.register_blueprint(user_bp)
         app.register_blueprint(album_bp)
 
