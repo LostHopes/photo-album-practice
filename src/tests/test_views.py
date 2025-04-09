@@ -1,5 +1,5 @@
 from flask_login import login_user
-from app.models import User
+from app.user.models import User
 from app import db
 
 

@@ -3,7 +3,7 @@
 {% block css %}
 
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/photos.css') }}">
+<link rel="stylesheet" href="{{ url_for('album_bp.static', filename='css/photos.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 
 {% endblock %}

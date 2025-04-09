@@ -11,7 +11,7 @@
 <div class="form content">
     <div>Logged in as {{ username }}</div>
     <div>
-        <form method="post" action="{{ url_for('logout') }}">
+        <form method="post" action="{{ url_for('user_bp.logout') }}">
             <input type="submit" value="Logout" class="logout">
         </form>
     </div>

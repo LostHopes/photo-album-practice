@@ -4,13 +4,13 @@
 
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/album.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/pagination.css') }}">
+<link rel="stylesheet" href="{{ url_for('album_bp.static', filename='css/album.css') }}">
+<link rel="stylesheet" href="{{ url_for('album_bp.static', filename='css/pagination.css') }}">
 
 {% endblock %}
 
 {% block js %}
-<script src="{{ url_for('static', filename='js/photos.js') }}"></script>
+<script src="{{ url_for('album_bp.static', filename='js/photos.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -33,7 +33,7 @@
     {% for url in urls %}
     <div class="photo-actions">
         <img src="{{ url }}" alt="Image" class="photo">
-        <form id="remove-form" action="{{ url_for('remove_photo', album_id=album_id) }}" method="post">
+        <form id="remove-form" action="{{ url_for('album_bp.remove_photo', album_id=album_id) }}" method="post">
             <input type="hidden" name="filename" value="{{ url.split('/')[-1].split('?')[0] }}">
             <input type="submit" value="X">
         </form>

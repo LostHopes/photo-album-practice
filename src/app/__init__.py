@@ -14,7 +14,7 @@ bcrypt = Bcrypt()
 migrate = Migrate()
 b2 = B2Api()
 
-login_manager.login_view = "login_page"
+login_manager.login_view = "user_bp.login_page"
 login_manager.login_message = "You can't view the photo album page as guest"
 login_manager.login_message_category = "info"
 
@@ -23,7 +23,12 @@ def create_app(config_obj=None):
     app.config.from_object(config_obj)
 
     with app.app_context():
-        from app import views, models, errors
+        from app.user import user_bp
+        from app.album import album_bp
+        from app import views, errors
+        
+        app.register_blueprint(user_bp)
+        app.register_blueprint(album_bp)
 
         db.init_app(app)
         login_manager.init_app(app)
