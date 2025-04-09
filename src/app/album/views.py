@@ -152,7 +152,7 @@ def remove_album(album_id: int):
 
     except Exception as e:
         app.logger.error(f"The album can't be deleted: {e}")
-        flash(f"Failed to remove the album", "error")
+        flash("Failed to remove the album", "error")
     return redirect(url_for("album_bp.photos"))
 
 
