@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from sqlalchemy.exc import IntegrityError
 from app.album import album_bp
 from app.album.models import PhotoAlbum, AlbumCategory, Photo
-from app.forms import AlbumForm, UploadForm
+from app.album.forms import AlbumForm, UploadForm
 from app import app, db, b2
 
 

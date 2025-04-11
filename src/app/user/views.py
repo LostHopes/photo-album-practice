@@ -4,7 +4,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from sqlalchemy.exc import IntegrityError
 from app.user import user_bp
 from app.user.models import User
-from app.forms import RegisterForm, LoginForm
+from app.user.forms import RegisterForm, LoginForm
 from app import app, db
 
 
