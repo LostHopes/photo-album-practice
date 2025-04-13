@@ -1,6 +1,6 @@
 [project]
 name = "photo-album"
-version = "0.1.0"
+version = "0.1.1"
 description = "Photo album built with Flask"
 license = "MIT"
 readme = "README.md"
