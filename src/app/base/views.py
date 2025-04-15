@@ -1,8 +1,8 @@
 from flask import render_template
-from app import app
+from app.base import base_bp
 
 
-@app.get("/")
+@base_bp.get("/")
 def home():
     title: str = "Home"
     return render_template("home.html", title=title)

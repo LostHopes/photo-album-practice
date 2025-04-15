@@ -2,7 +2,7 @@
 
 {% block css %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/error.css') }}">
+<link rel="stylesheet" href="{{ url_for('base_bp.static', filename='css/error.css') }}">
 
 {% endblock %}
 
@@ -11,7 +11,7 @@
 <div class="err-block">
     <div class="err-label">{{ msg }}</div>
     <div class="err-btn">
-        <a href="{{ url_for('home') }}">Return home</a>
+        <a href="{{ url_for('base_bp.home') }}">Return home</a>
     </div>
 </div>
 

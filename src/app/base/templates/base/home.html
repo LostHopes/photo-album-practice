@@ -3,7 +3,7 @@
 {% block css %}
 {{ super() }}
 
-<link rel='stylesheet' type='text/css' href='{{ url_for('static', filename="css/home.css" ) }}'>
+<link rel='stylesheet' type='text/css' href='{{ url_for('base_bp.static', filename="css/home.css" ) }}'>
 
 {% endblock %}
 
@@ -28,7 +28,7 @@
         <a href="{{ url_for('user_bp.register_page') }}">Join now</a>
     </div>
     <div class="item">
-        <img src="{{ url_for('static', filename='img/team.jpg') }}" alt="Team">
+        <img src="{{ url_for('base_bp.static', filename='img/team.jpg') }}" alt="Team">
     </div>
 </div>
 
