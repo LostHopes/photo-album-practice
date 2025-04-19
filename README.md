@@ -84,10 +84,6 @@ Configuration can be modified in **pyproject.toml** file
 pytest
 ```
 
-# Known issues
-
-- [x] Remove particular photo by filename or id
-
 # License
 
 The project licensed under MIT. (See [LICENSE](LICENSE))
