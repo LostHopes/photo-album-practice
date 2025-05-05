@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, SubmitField, FileField
-from wtforms.validators import DataRequired, Length, EqualTo, Optional
+from wtforms import StringField, SubmitField, FileField
+from wtforms.validators import DataRequired, Length
 from flask_wtf.file import FileAllowed
 
 
