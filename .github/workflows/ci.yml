@@ -66,8 +66,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Run linter
+      - name: Checkout code
         uses: actions/checkout@v4
+      - name: Run linter
         run: |
           python -m venv .venv
           source .venv/bin/activate
