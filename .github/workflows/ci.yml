@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: true
+          push: false
           tags: ghcr.io/${{ steps.lowercase_owner.outputs.lowercase }}/${{ steps.lowercase_name.outputs.lowercase }}:${{ github.sha }}
 
 
@@ -61,4 +61,16 @@ jobs:
           pip install uv
           uv sync --all-groups
           pytest
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Run linter
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip uv
+          uv sync --group lint
+          ruff check .
   
