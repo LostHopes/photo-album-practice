@@ -30,3 +30,6 @@ prod = [
 
 [tool.pytest.ini_options]
 addopts = "-v --cov-fail-under=50 --cov=app"
+
+[tool.ruff.lint]
+ignore = ["F401", "E402", "E731"]
